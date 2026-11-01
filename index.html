@@ -387,15 +387,19 @@ async function loadContent(){
   }));
   state.gotSets=true;
 }
+var MIG11={'11:r4':'11:rn2','11:r6':'11:rn4','11:r8':'11:rn8','11:r9':'11:rn9','11:r10':'11:rn10','11:r11':'11:rn11','11:r12':'11:rn12','11:r14':'11:rn14','11:r15':'11:rn6','11:r17':'11:rn17','11:r22':'11:rn20','11:r23':'11:rn22'};
 var MIG10={'10:r1':'10:rn4','10:r3':'10:rn2','10:r5':'10:rn17','10:r6':'10:rn1','10:r7':'10:rn5','10:r9':'10:rn6','10:r13':'10:rn14','10:r14':'10:rn15','10:r16':'10:rn16','10:r20':'10:rn10','10:r21':'10:rn12','10:r22':'10:rn13','10:r24':'10:rn18'};
 function migrate(){
   var P=state.P,ch=false;
-  Object.keys(MIG10).forEach(function(o){var n=MIG10[o];
+  var MIGS={};Object.keys(MIG10).forEach(function(k){MIGS[k]=MIG10[k]});Object.keys(MIG11).forEach(function(k){MIGS[k]=MIG11[k]});
+  Object.keys(MIGS).forEach(function(o){var n=MIGS[o];
     if(P.cards[o]){if(!P.cards[n])P.cards[n]=P.cards[o];delete P.cards[o];ch=true}
     if(P.att[o]){var cur=P.att[n]||[],seen={};cur.forEach(function(x){seen[x.at+x.text]=1});
       P.att[o].forEach(function(x){if(!seen[x.at+x.text])cur.push(x)});P.att[n]=cur;delete P.att[o];ch=true}
   });
-  Object.keys(P.cards).forEach(function(k){if(/^10:speak_\d+$/.test(k)){delete P.cards[k];ch=true}});
+  Object.keys(P.cards).forEach(function(k){if(/^1[01]:speak_\d+$/.test(k)){delete P.cards[k];ch=true}});
+  try{if(!localStorage.getItem('anzca_mig11saq')){localStorage.setItem('anzca_mig11saq','1');
+    ['11:saq_1'].forEach(function(k){if(P.saq[k]){delete P.saq[k];ch=true}});}}catch(e){}
   if(ch)saveP();
 }
 async function importOnce(){
