@@ -164,6 +164,7 @@ input[type=number]{font:inherit;color:var(--ink);background:var(--bg);border:1px
 @media (max-width:720px){.srow{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:12px;row-gap:10px;padding:14px 16px}.srow .num,.srow .stitle,.srow .sstat{grid-column:1/-1;grid-row:auto}.srow .num{font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:-4px}.srow .num::before{content:'Set '}.srow .spass{grid-column:auto}.srow .spass small{white-space:normal;line-height:1.2}}
 @media (max-width:720px){.srow .num{text-align:left}.nav{gap:0}.nav a{padding:6px 9px;font-size:14px}.brand small{display:none}}
 @media (max-width:720px){.tabs{flex-wrap:nowrap;overflow-x:auto;gap:0;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tabs a,.tabs button{white-space:nowrap;flex:none;padding-left:12px;padding-right:12px}}
+.selfchk .check span{font-family:var(--ui);font-size:15px;line-height:1.45}.selfchk .selfn{font-family:var(--ui)}
 </style>
 
 </head><body>
@@ -198,6 +199,13 @@ var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'
 var app=document.getElementById('app');
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function inl(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')}
+function ansHtml(it){
+  var a=it.a||'',i=a.search(/^## Self-marking checklist\s*$/m);
+  if(i<0)return md(a);
+  var head=a.slice(0,i),items=a.slice(i).split('\n').filter(function(l){return /^\s*[-*] /.test(l)}).map(function(l){return l.replace(/^\s*[-*] (\[ \] )?/,'')});
+  if(!items.length)return md(a);
+  return md(head)+'<div class="selfchk"><h2>Self-marking checklist</h2>'+items.map(function(r){return '<label class="check"><input type="checkbox" data-act="selfTick"><span>'+inl(r)+'</span></label>'}).join('')+'<div class="mono selfn" style="margin-top:10px"><b>0 of '+items.length+'</b></div></div>';
+}
 function md(src){
   var L=String(src||'').split('\n'),h='',i=0;
   function cells(r){return r.trim().replace(/^\|/,'').replace(/\|$/,'').split('|').map(function(c){return c.trim()})}
@@ -579,7 +587,7 @@ function rSet(r){
     h+=list.map(function(it){
       var key=r.n+':'+it.id,c2=state.P.cards[key],chip=statusChip(c2);
       var rates=[1,2,3,4].map(function(r2){var lab=['Again','Hard','Good','Easy'][r2-1],nx=r2===1?'today':ivl(sched(c2,r2).i);return '<button class="rate r'+r2+'" data-act="rateInline" data-key="'+key+'" data-r="'+r2+'">'+lab+'<small>'+nx+'</small></button>'}).join('');
-      return '<details class="ch qd" data-key="'+key+'"'+(state.open[key]?' open':'')+'><summary><span>'+esc(it.title)+(it.sub?'<br><small class="mut">'+esc(it.sub)+(it.target?' · target '+it.target+' s':'')+'</small>':'')+'</span><span class="row" style="gap:6px"><span class="chip '+priCls(pri(it))+'">'+esc(pri(it))+'</span><span data-status>'+chip+'</span></span></summary><div class="inner">'+(it.type==='retrieve'?'<div class="qtext">'+esc(it.q)+'</div>':'<p class="mut" style="margin:12px 0">Say it out loud first'+(it.target?' · target '+it.target+' s':'')+'</p>')+'<div class="attin">'+attInput(key,it)+'</div><div class="row" style="margin-top:12px"><button class="btn primary" data-act="showA">Show model answer</button></div><div class="ansbox" hidden><div class="md">'+md(it.a)+'</div><div class="eyebrow" style="margin-top:16px">How well did you know it?</div><div class="rates">'+rates+'</div></div><div class="attlist">'+attHtml(key)+'</div></div></details>';
+      return '<details class="ch qd" data-key="'+key+'"'+(state.open[key]?' open':'')+'><summary><span>'+esc(it.title)+(it.sub?'<br><small class="mut">'+esc(it.sub)+(it.target?' · target '+it.target+' s':'')+'</small>':'')+'</span><span class="row" style="gap:6px"><span class="chip '+priCls(pri(it))+'">'+esc(pri(it))+'</span><span data-status>'+chip+'</span></span></summary><div class="inner">'+(it.type==='retrieve'?'<div class="qtext">'+esc(it.q)+'</div>':'<p class="mut" style="margin:12px 0">Say it out loud first'+(it.target?' · target '+it.target+' s':'')+'</p>')+'<div class="attin">'+attInput(key,it)+'</div><div class="row" style="margin-top:12px"><button class="btn primary" data-act="showA">Show model answer</button></div><div class="ansbox" hidden><div class="md">'+ansHtml(it)+'</div><div class="eyebrow" style="margin-top:16px">How well did you know it?</div><div class="rates">'+rates+'</div></div><div class="attlist">'+attHtml(key)+'</div></div></details>';
     }).join('');
   }else{
     var store=tab==='saq'?state.P.saq:state.P.viva;
@@ -611,7 +619,7 @@ function rReview(){
   if(!s.revealed)h+='<div class="row" style="margin-top:14px"><button class="btn primary" data-act="reveal">Reveal model answer</button><span class="mut" style="font-size:13px">Space also reveals</span></div>';
   h+='</div>';
   if(s.revealed){
-    h+='<div class="card"><div class="eyebrow" style="margin-bottom:6px">Model answer</div><div class="md">'+md(it.a)+'</div>'+attHtml(s.keys[s.idx])+'</div>';
+    h+='<div class="card"><div class="eyebrow" style="margin-bottom:6px">Model answer</div><div class="md">'+ansHtml(it)+'</div>'+attHtml(s.keys[s.idx])+'</div>';
     h+='<div class="eyebrow">How well did you know it?</div><div class="rates">'+[1,2,3,4].map(function(r){var lab=['Again','Hard','Good','Easy'][r-1],nx=r===1?'today':ivl(sched(c,r).i);return '<button class="rate r'+r+'" data-act="rate" data-r="'+r+'">'+lab+'<small>'+r+' · '+nx+'</small></button>'}).join('')+'</div>';
   }
   return h;
@@ -793,6 +801,7 @@ var A={
   startClock:function(){var p=state.practice;p.started=true;p.stopped=false;state._scroll=window.scrollY;render()},
   stopClock:function(){var p=state.practice;stopClock();p.stopped=true;p.started=false;state._scroll=window.scrollY;render()},
   revealPractice:function(){var p=state.practice;stopClock();p.revealed=true;p.stopped=true;p.checks=[];state._scroll=window.scrollY;render()},
+  selfTick:function(el){var w=el.closest('.selfchk'),all=w.querySelectorAll('input[type=checkbox]'),n=0;all.forEach(function(x){if(x.checked)n++});w.querySelector('.selfn b').textContent=n+' of '+all.length},
   tick:function(el){var p=state.practice;p.checks[+el.dataset.i]=el.checked;var n=(p.it.rubric||[]).length;document.getElementById('score').textContent=p.checks.filter(Boolean).length+' of '+n},
   saveScore:function(){var p=state.practice,n=(p.it.rubric||[]).length||1;state.P.saq[p.key]={score:p.checks.filter(Boolean).length/n,at:today(),secs:Math.round(p.elapsed)};saveP();toast('Score saved')},
   showPoints:function(){state.practice.shown=true;state._scroll=window.scrollY;render()},
