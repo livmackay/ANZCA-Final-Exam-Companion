@@ -329,7 +329,7 @@ function syncHtml(){
   }
   return h;
 }
-function applyMerged(m){state.P=normP(m);initSnap();lsSave();idbSet('kv','P',JSON.parse(JSON.stringify(state.P))).catch(function(){});refresh()}
+function applyMerged(m){state.P=normP(m);initSnap();migrate();lsSave();idbSet('kv','P',JSON.parse(JSON.stringify(state.P))).catch(function(){});refresh()}
 async function syncNow(){
   var y=state.sync;if(!y.user||!fbDb||y.busy)return;
   y.busy=true;y.msg='';syncUI();
@@ -387,6 +387,17 @@ async function loadContent(){
   }));
   state.gotSets=true;
 }
+var MIG10={'10:r1':'10:rn4','10:r3':'10:rn2','10:r5':'10:rn17','10:r6':'10:rn1','10:r7':'10:rn5','10:r9':'10:rn6','10:r13':'10:rn14','10:r14':'10:rn15','10:r16':'10:rn16','10:r20':'10:rn10','10:r21':'10:rn12','10:r22':'10:rn13','10:r24':'10:rn18'};
+function migrate(){
+  var P=state.P,ch=false;
+  Object.keys(MIG10).forEach(function(o){var n=MIG10[o];
+    if(P.cards[o]){if(!P.cards[n])P.cards[n]=P.cards[o];delete P.cards[o];ch=true}
+    if(P.att[o]){var cur=P.att[n]||[],seen={};cur.forEach(function(x){seen[x.at+x.text]=1});
+      P.att[o].forEach(function(x){if(!seen[x.at+x.text])cur.push(x)});P.att[n]=cur;delete P.att[o];ch=true}
+  });
+  Object.keys(P.cards).forEach(function(k){if(/^10:speak_\d+$/.test(k)){delete P.cards[k];ch=true}});
+  if(ch)saveP();
+}
 async function importOnce(){
   try{
     if(localStorage.getItem('anzca_imp10'))return;
@@ -404,6 +415,7 @@ async function init(){
   initSnap();render();
   try{await loadContent()}catch(e){state.slow=true}
   await importOnce();
+  migrate();
   refresh();
   syncStart();
   if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js')}catch(e){}}
