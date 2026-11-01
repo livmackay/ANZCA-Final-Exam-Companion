@@ -7,8 +7,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ANZCA Companion">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
 <title>ANZCA Final Companion</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -275,10 +275,10 @@ function hydrateAudio(root){
 
 /* ---------- loading study content from the content folder ---------- */
 async function loadContent(){
-  var idx=await (await fetch('content/index.json',{cache:'no-cache'})).json();
+  var idx=await (await fetch('content-index.json',{cache:'no-cache'})).json();
   await Promise.all(idx.sets.map(async function(e){
     try{
-      var d=await (await fetch('content/'+e.file,{cache:'no-cache'})).json();
+      var d=await (await fetch(e.file,{cache:'no-cache'})).json();
       state.sets[d.num]={num:d.num,title:d.title,counts:d.counts,updated:d.updated,note:d.note};
       state.items[d.num]=d.items;state.loaded[d.num]=d.updated;
     }catch(err){}

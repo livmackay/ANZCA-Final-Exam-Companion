@@ -2,7 +2,7 @@
 """Validate every content/set-N.json, recompute its counts, and rebuild content/index.json.
 Run after adding or changing a set:  python3 tools/build_index.py"""
 import json,glob,os,re,sys,datetime
-root=os.path.join(os.path.dirname(__file__),'..','content')
+root=os.path.dirname(os.path.abspath(__file__))
 TYPES={'learn','retrieve','speak','saq','viva','los','trials','refs','docs'}
 sets=[];bad=0
 for f in sorted(glob.glob(root+'/set-*.json'),key=lambda p:int(re.search(r'set-(\d+)',p).group(1))):
@@ -30,5 +30,5 @@ for f in sorted(glob.glob(root+'/set-*.json'),key=lambda p:int(re.search(r'set-(
         bad+=1;print(f"set-{n}: PROBLEMS");[print('  -',e) for e in errs];continue
     json.dump(d,open(f,'w',encoding='utf-8'),ensure_ascii=False)
     sets.append({'num':n,'file':os.path.basename(f),'updated':d['updated']});print(f"set-{n}: ok {d['counts']}")
-json.dump({'sets':sets},open(root+'/index.json','w'))
+json.dump({'sets':sets},open(root+'/content-index.json','w'))
 print(f"{len(sets)} sets in index; {bad} with problems");sys.exit(1 if bad else 0)
