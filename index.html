@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="en-NZ"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B7A85">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ANZCA Companion">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<title>ANZCA Final Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+html{color-scheme:light;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}body{margin:0;font-size:14px}img{max-width:100%}
+/* Layout: sticky top bar, one centred column; dashboard is a ruled syllabus ledger, study screens are single-card focus. */
+:root{
+  --bg:#EDF2F3; --surface:#FFFFFF; --ink:#0F2428; --muted:#587076; --line:#D2DDDF;
+  --accent:#0B7A85; --accent-ink:#FFFFFF; --accent-soft:#DAEFF1;
+  --warn:#9A5B0A; --warn-soft:#FAEAD0; --good:#2A7749; --good-soft:#DCF0E3; --bad:#A93A2E; --bad-soft:#F7DDD9;
+  --ui:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --read:'Source Serif 4',Georgia,'Times New Roman',serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C1719; --surface:#132226; --ink:#E2EEF0; --muted:#8DA8AE; --line:#26393D;
+  --accent:#4CC3CF; --accent-ink:#06191C; --accent-soft:#12383D;
+  --warn:#E5A653; --warn-soft:#3A2B12; --good:#6CCB8F; --good-soft:#14341F; --bad:#F08A7D; --bad-soft:#3F1B17; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1719; --surface:#132226; --ink:#E2EEF0; --muted:#8DA8AE; --line:#26393D;
+  --accent:#4CC3CF; --accent-ink:#06191C; --accent-soft:#12383D;
+  --warn:#E5A653; --warn-soft:#3A2B12; --good:#6CCB8F; --good-soft:#14341F; --bad:#F08A7D; --bad-soft:#3F1B17; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--ui);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:30}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line);margin:0 calc(-1*max(16px,env(safe-area-inset-right,0px))) 0 calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+.top-in{max-width:1480px;margin:0 auto;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.brand{font-weight:600;letter-spacing:-.01em;display:flex;align-items:baseline;gap:8px}
+.brand small{font:500 11px var(--mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.nav{display:flex;gap:4px;overflow-x:auto;min-width:0}
+.nav a{padding:6px 12px;border-radius:6px;color:var(--muted);font-weight:500;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--accent-soft)}
+.nav a.on{color:var(--accent);background:var(--accent-soft)}
+.badge{font:500 11px var(--mono);background:var(--accent);color:var(--accent-ink);border-radius:10px;padding:1px 7px;margin-left:6px}
+.wrap{max-width:1480px;margin:0 auto;padding-block:24px 0}
+h1{font-size:26px;line-height:1.2;letter-spacing:-.02em;margin:0 0 4px;text-wrap:balance}
+h2{font-size:17px;margin:0 0 12px;letter-spacing:-.01em}
+.eyebrow{font:500 11px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.sub{color:var(--muted);margin:0 0 20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.banner{border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:14px;background:var(--warn-soft);color:var(--warn)}
+.banner.bad{background:var(--bad-soft);color:var(--bad)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi b{display:block;font:500 28px/1.1 var(--mono);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12px;color:var(--muted)}
+.kpi.hot b{color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:9px 16px;font-weight:500}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.08);color:var(--accent-ink)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.chip{display:inline-block;font:500 11px var(--mono);letter-spacing:.04em;padding:2px 8px;border-radius:5px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.good{background:var(--good-soft);color:var(--good)}
+.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.chip.mute{background:var(--bg);color:var(--muted)}
+.syl{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.srow{display:grid;grid-template-columns:44px minmax(0,1.3fr) minmax(0,1fr) repeat(3,minmax(0,.55fr));gap:14px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)}
+.srow:first-child{border-top:0}
+.srow:hover{background:var(--accent-soft)}
+.srow.cur{box-shadow:inset 3px 0 0 var(--accent)}
+.srow .num{font:500 15px var(--mono);color:var(--muted)}
+.srow .stitle b{display:block;font-weight:500}
+.srow .stitle small{color:var(--muted);font-size:12.5px}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.tabs{display:flex;flex-wrap:wrap;gap:2px 4px;border-bottom:1px solid var(--line);margin:18px 0 18px}
+.tabs a{padding:9px 14px;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs a.on{color:var(--accent);border-color:var(--accent)}
+.tabs a small{font:500 11px var(--mono);margin-left:6px;opacity:.8}
+.qrow{display:flex;width:100%;text-align:left;gap:12px;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:8px}
+.qrow:hover{border-color:var(--accent)}
+.qrow .qt{min-width:0;flex:1}
+.qrow .chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+details.ch{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:10px}
+details.ch>summary>span:first-of-type{flex:1;min-width:0;text-align:left}
+details.ch>summary>.row{margin-left:auto;justify-content:flex-end;flex:none}
+details.ch>summary{list-style:none;cursor:pointer;padding:14px 18px;display:flex;gap:12px;align-items:center;justify-content:space-between;font-weight:500}
+details.ch>summary::-webkit-details-marker{display:none}
+details.ch>summary::before{content:"+";font:500 16px var(--mono);color:var(--accent);margin-right:4px}
+details.ch[open]>summary::before{content:"\2212"}
+details.ch .inner{padding:2px 20px 20px;border-top:1px solid var(--line)}
+.md{font-family:var(--read);font-size:16.5px;line-height:1.65;max-width:none}
+.md h3{font:600 19px var(--ui);margin:26px 0 8px;letter-spacing:-.01em}
+.md h4{font:600 16px var(--ui);margin:18px 0 6px}
+.md p{margin:0 0 12px}
+.md ul{margin:0 0 14px;padding-left:22px}
+.md li{margin-bottom:4px}
+.md .callout{background:var(--accent-soft);border-radius:8px;padding:12px 16px;margin:14px 0;font-family:var(--ui);font-size:15px}
+.tablewrap{overflow-x:auto;margin:12px 0 16px;border:1px solid var(--line);border-radius:8px;max-width:100%}
+.md table{border-collapse:collapse;font-family:var(--ui);font-size:14px;width:100%;min-width:0}
+.md th{background:var(--bg);text-align:left;font-weight:600;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:bottom}
+.md td{padding:8px 12px;border-top:1px solid var(--line);vertical-align:top}
+.qtext{font-family:var(--read);font-size:19px;line-height:1.55;margin:10px 0 16px}
+[hidden]{display:none!important}
+.attitem{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:8px}.atttext{white-space:pre-wrap;margin-top:6px;line-height:1.55}.attitem audio,.recbox audio,.attin audio{width:100%;max-width:420px;margin-top:8px}.attin textarea{min-height:90px;margin-top:6px}
+textarea{width:100%;min-height:120px;resize:vertical;font:15px/1.5 var(--ui);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px}
+input[type=number]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:80px}
+.prog{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin-bottom:16px}
+.prog i{display:block;height:100%;background:var(--accent)}
+.rates{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
+.rate{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:10px 6px;text-align:center;font-weight:600}
+.rate small{display:block;font:500 11px var(--mono);color:var(--muted);margin-top:2px}
+.rate:hover{border-color:var(--accent)}
+.rate.r1{color:var(--bad)}.rate.r2{color:var(--warn)}.rate.r3{color:var(--good)}.rate.r4{color:var(--accent)}
+.timer{font:500 30px var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.timer.over{color:var(--bad)}
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line)}
+.check:first-child{border-top:0}
+.check input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.empty{border:1px dashed var(--line);border-radius:10px;padding:28px 20px;text-align:center;color:var(--muted)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.mut{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font-size:14px;z-index:40}
+@media (max-width:720px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:1fr}
+  .srow{grid-template-columns:34px minmax(0,1fr);row-gap:8px}
+  .srow .sstat,.srow .sbar{grid-column:2}
+  h1{font-size:22px}
+  .rates{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:no-preference){.bar i,.prog i{transition:width .3s}}
+.lohead,.lorow{display:grid;grid-template-columns:minmax(0,1fr) repeat(3,92px);gap:10px;align-items:center}
+.lohead{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 14px}
+.lohead span:not(:first-child){text-align:center}
+.lorow{padding:10px 14px;border-top:1px solid var(--line)}
+.lorow .lt{font-size:14px;line-height:1.45;min-width:0}
+.lorow .lt p{margin:2px 0}.lorow .lt ul{margin:2px 0;padding-left:20px}.lorow .lt li{margin:0}
+.lobox{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:16px;overflow:hidden}
+.lobox>.lotitle{display:flex;gap:10px;align-items:center;padding:12px 14px;font-weight:600;background:var(--bg)}
+.pass{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 4px;font-size:12.5px;color:var(--muted);font-weight:500}
+.pass.on{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.qd .ansbox{margin-top:14px;border-top:1px solid var(--line);padding-top:6px}
+@media (max-width:720px){.lohead{display:none}.lorow{grid-template-columns:repeat(3,1fr)}.lorow .lt{grid-column:1/-1}}
+.srow .sstat,.srow .spass{display:flex;flex-direction:column;gap:3px;min-width:0}
+.srow .spass b{font-size:15px;font-weight:600}
+.srow .sstat small,.srow .spass small{font-size:11.5px}
+.srow .stitle{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:2px}
+.srow .stitle b{display:flex;align-items:center;gap:8px;flex-wrap:wrap;text-align:left}
+.srow .sstat,.srow .spass{text-align:left;align-items:stretch}
+.srow.empty{opacity:.7}
+@media (max-width:720px){.srow{grid-template-columns:34px repeat(3,minmax(0,1fr))}.srow .stitle,.srow .sstat{grid-column:2/-1}.srow .num{grid-row:1/3}}
+</style>
+
+</head><body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="#dashboard">ANZCA Final Companion <small>Study set</small></a>
+  <nav class="nav" id="nav"></nav>
+</div></header>
+<main class="wrap" id="app"></main>
+<div id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+/* ---------- syllabus (structure only; all study content lives in the database) ---------- */
+var SYL=[
+[1,'2026-08-10','Shock & Haemodynamics',17],[2,'2026-08-17','Haemorrhage, Coagulation & Transfusion',17],[3,'2026-08-24','Respiratory Failure & Ventilation',38],
+[4,'2026-08-31','Sepsis, Infection & Anaphylaxis',20],[5,'2026-09-07','Acid-base, Electrolytes, AKI & Renal Replacement Therapy',19],[6,'2026-09-14','Neurocritical Care & Neuromuscular Disease',34],
+[7,'2026-10-05','Trauma I – Major Trauma & Haemorrhage',30],[8,'2026-10-12','Trauma II – Burns, Environmental Emergencies & Transfer',16],[9,'2026-10-19','ICU Integration, Arrest & Organ Support',13],
+[10,'2026-10-26','Monitoring, Vascular Access & Haemodynamic Assessment',31],[11,'2026-11-02','Cardiac I – IHD, Heart Failure & Valvular Disease',15],[12,'2026-11-09','Cardiac II – Arrhythmias, Devices, RV Failure & Pulmonary Circulation',13],
+[13,'2026-11-16','Cardiac Surgery, CPB & Mechanical Support',18],[14,'2026-11-23','Vascular & Interventional Anaesthesia',20],[15,'2026-11-30','Acute Pain',26],
+[16,'2026-12-07','Persistent Pain, Opioids & Substance Use',15],[17,'2026-12-14','General Surgery, Upper GI, Hepatobiliary & Endoscopy',18],[18,'2027-01-04','Urology, Gynaecology, Endocrine/Metabolic & Multisystem Medicine',10],
+[19,'2027-01-11','Obstetrics I – Labour Analgesia, Neuraxial & Caesarean Anaesthesia',13],[20,'2027-01-18','Obstetrics II – High-risk Pregnancy & Obstetric Emergencies',21],[21,'2027-01-25','Airway I – Assessment, Normal Airway, RSI & Devices',25],
+[22,'2027-02-01','Airway II – Difficult Airway, Obstruction & Extubation',20],[23,'2027-02-08','General Anaesthesia, Sedation, Recovery & Core Pharmacology',41],[24,'2027-02-15','Regional I – Neuraxial, Selection, Safety & Complications',26],
+[25,'2027-02-22','Regional II – Peripheral Blocks & Regional Anatomy',11],[26,'2027-03-01','Thoracic Anaesthesia',25],[27,'2027-03-08','Neurosurgery & Neuroradiology',17],
+[28,'2027-03-15','Paediatrics I – Development, Physiology, Airway & Ventilation',15],[29,'2027-03-22','Paediatrics II – Induction, Fluids, Monitoring & Comorbidity',19],[30,'2027-03-29','Paediatrics III – Pain & Regional Anaesthesia',21],
+[31,'2027-04-05','Paediatrics IV – Neonatal, Emergencies, Major Surgery & Systems',30],[32,'2027-04-12','Head & Neck / ENT / Dental / ECT',29],[33,'2027-04-19','Orthopaedics',28],
+[34,'2027-04-26','Perioperative Assessment, Optimisation & Medical-viva Framework',46],[35,'2027-05-03','Ophthalmic + Plastics, Reconstructive & Burns Surgery',36],[36,'2027-05-10','Safety, Quality, Equipment, Evidence & Professional Roles',68]
+].map(function(r){return {n:r[0],start:r[1],title:r[2],lo:r[3]}});
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/* ---------- helpers ---------- */
+var app=document.getElementById('app');
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function inl(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')}
+function md(src){
+  var L=String(src||'').split('\n'),h='',i=0;
+  function cells(r){return r.trim().replace(/^\|/,'').replace(/\|$/,'').split('|').map(function(c){return c.trim()})}
+  while(i<L.length){
+    var l=L[i];
+    if(!l.trim()){i++;continue}
+    if(l.indexOf('## ')===0){h+='<h3>'+inl(l.slice(3))+'</h3>';i++;continue}
+    if(l.indexOf('### ')===0){h+='<h4>'+inl(l.slice(4))+'</h4>';i++;continue}
+    if(l.charAt(0)==='|'){
+      var rows=[];while(i<L.length&&L[i].charAt(0)==='|'){rows.push(L[i]);i++}
+      var head=cells(rows[0]),body=rows.slice(2).map(cells);
+      h+='<div class="tablewrap"><table><thead><tr>'+head.map(function(c){return '<th>'+inl(c)+'</th>'}).join('')+'</tr></thead><tbody>'+body.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+inl(c)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table></div>';continue}
+    if(l.indexOf('- ')===0){var it=[];while(i<L.length&&L[i].indexOf('- ')===0){it.push(L[i].slice(2));i++}h+='<ul>'+it.map(function(x){return '<li>'+inl(x)+'</li>'}).join('')+'</ul>';continue}
+    if(l.indexOf('> ')===0){var q=[];while(i<L.length&&L[i].indexOf('> ')===0){q.push(L[i].slice(2));i++}h+='<div class="callout">'+inl(q.join(' '))+'</div>';continue}
+    var p=[];while(i<L.length&&L[i].trim()&&!/^(## |### |\||- |> )/.test(L[i])){p.push(L[i]);i++}
+    h+='<p>'+inl(p.join(' '))+'</p>';
+  }
+  return h;
+}
+function pad(n){return String(n).padStart(2,'0')}
+function ymd(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+function pd(s){var a=s.split('-').map(Number);return new Date(a[0],a[1]-1,a[2])}
+function addD(s,n){var d=pd(s);d.setDate(d.getDate()+n);return ymd(d)}
+function today(){return ymd(new Date())}
+function fmt(s){var d=pd(s);return d.getDate()+' '+MON[d.getMonth()]}
+function endOf(n){return addD(SYL[n-1].start,6)}
+function mmss(s){s=Math.max(0,Math.round(s));return pad(Math.floor(s/60))+':'+pad(s%60)}
+function ivl(d){return d>=60?Math.round(d/30)+'mo':d+'d'}
+function pri(it){return (it.priority||'').split(' ')[0]}
+function priCls(p){return p==='P1'?'':p==='P2'?'warn':'mute'}
+function cnt(c){var t=0;for(var k in c)t+=+c[k]||0;return t}
+function isCard(i){return i.type==='retrieve'||i.type==='speak'}
+function statusChip(c2){if(!c2)return '<span class="chip mute">New</span>';if(c2.due<=today())return '<span class="chip warn">Due</span>';return '<span class="chip good">Next in '+ivl(Math.max(1,Math.round((pd(c2.due)-pd(today()))/864e5)))+'</span>'}
+function losStats(n){var tot=0,p=[0,0,0];(state.items[n]||[]).filter(function(i){return i.type==='los'}).forEach(function(d){(d.groups||[]).forEach(function(g,gi){(g.items||[]).forEach(function(x){tot++;var v=state.P.los[n+':'+gi+':'+x.code]||[];for(var k=0;k<3;k++)if(v[k])p[k]++})})});return {tot:tot,p:p}}
+function sortItems(a){return a.slice().sort(function(x,y){return (x.order||0)-(y.order||0)})}
+
+/* ---------- state ---------- */
+var state={sets:{},items:{},loaded:{},P:defP(),gotSets:false,slow:false,saveErr:'',session:null,practice:null,open:{},pend:{}};
+function defP(){return {v:1,cards:{},done:{},los:{},saq:{},viva:{},daily:{},att:{},settings:{newPerDay:15}}}
+function normP(d){var p=defP();if(!d)return p;d=JSON.parse(JSON.stringify(d));['cards','done','los','saq','viva','daily','att'].forEach(function(k){if(d[k]&&typeof d[k]==='object')p[k]=d[k]});if(d.settings&&d.settings.newPerDay>=0)p.settings.newPerDay=d.settings.newPerDay;return p}
+var tmr=null,dirty=false,writing=false,wt=null,clock=null;
+
+/* ---------- persistence (on this device first, IndexedDB) ---------- */
+var DBN='anzca-companion',idbp=null;
+function idb(){
+  if(idbp)return idbp;
+  idbp=new Promise(function(res,rej){
+    var q=indexedDB.open(DBN,1);
+    q.onupgradeneeded=function(){var d=q.result;d.createObjectStore('kv');d.createObjectStore('audio')};
+    q.onsuccess=function(){res(q.result)};q.onerror=function(){rej(q.error)};
+  });
+  return idbp;
+}
+function idbGet(store,key){return idb().then(function(d){return new Promise(function(res,rej){var r=d.transaction(store).objectStore(store).get(key);r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error)}})})}
+function idbSet(store,key,val){return idb().then(function(d){return new Promise(function(res,rej){var t=d.transaction(store,'readwrite');t.objectStore(store).put(val,key);t.oncomplete=function(){res()};t.onerror=function(){rej(t.error)}})})}
+function idbDel(store,key){return idb().then(function(d){return new Promise(function(res,rej){var t=d.transaction(store,'readwrite');t.objectStore(store).delete(key);t.oncomplete=function(){res()};t.onerror=function(){rej(t.error)}})})}
+function lsSave(){try{localStorage.setItem('anzca_p',JSON.stringify(state.P))}catch(e){}}
+function lsLoad(){try{var r=localStorage.getItem('anzca_p');if(r)state.P=normP(JSON.parse(r))}catch(e){}}
+function saveP(){
+  dirty=true;clearTimeout(wt);wt=setTimeout(flush,400);
+  lsSave();
+}
+function prune(){var keys=Object.keys(state.P.daily).sort();while(keys.length>120){delete state.P.daily[keys.shift()]}}
+async function flush(){
+  if(writing){wt=setTimeout(flush,300);return}
+  writing=true;dirty=false;prune();
+  try{await idbSet('kv','P',JSON.parse(JSON.stringify(state.P)));if(state.saveErr){state.saveErr='';render()}}catch(e){state.saveErr=(e&&e.name)||'error';dirty=true;render()}
+  writing=false;
+}
+
+/* ---------- audio on this device ---------- */
+var urlCache={};
+function hydrateAudio(root){
+  (root||document).querySelectorAll('audio[data-aid]').forEach(function(a){
+    if(a.dataset.done)return;a.dataset.done='1';var id=a.dataset.aid;
+    if(urlCache[id]){a.src=urlCache[id];return}
+    idbGet('audio',id).then(function(b){if(b){urlCache[id]=URL.createObjectURL(b);a.src=urlCache[id]}else{a.replaceWith(Object.assign(document.createElement('span'),{className:'mut',textContent:'Recording is on another device'}))}});
+  });
+}
+
+/* ---------- loading study content from the content folder ---------- */
+async function loadContent(){
+  var idx=await (await fetch('content/index.json',{cache:'no-cache'})).json();
+  await Promise.all(idx.sets.map(async function(e){
+    try{
+      var d=await (await fetch('content/'+e.file,{cache:'no-cache'})).json();
+      state.sets[d.num]={num:d.num,title:d.title,counts:d.counts,updated:d.updated,note:d.note};
+      state.items[d.num]=d.items;state.loaded[d.num]=d.updated;
+    }catch(err){}
+  }));
+  state.gotSets=true;
+}
+async function init(){
+  try{
+    try{await navigator.storage.persist()}catch(e){}
+    var saved=await idbGet('kv','P');
+    if(saved)state.P=normP(saved);else lsLoad();
+  }catch(e){lsLoad()}
+  render();
+  try{await loadContent()}catch(e){state.slow=true}
+  refresh();
+  if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js')}catch(e){}}
+}
+
+/* ---------- derived data ---------- */
+function allCards(only){
+  var out=[];Object.keys(state.items).map(Number).sort(function(a,b){return a-b}).forEach(function(n){
+    if(only&&only!==n)return;
+    sortItems(state.items[n].filter(isCard)).forEach(function(it){out.push({key:n+':'+it.id,n:n,it:it})})});
+  return out;
+}
+function isDue(key){var c=state.P.cards[key];return !!c&&c.due<=today()}
+function newCap(){var d=state.P.daily[today()];return Math.max(0,state.P.settings.newPerDay-(d?d.n||0:0))}
+function buildQueue(only){
+  var cards=allCards(only),P=state.P;
+  var due=cards.filter(function(c){return isDue(c.key)}).sort(function(a,b){return P.cards[a.key].due<P.cards[b.key].due?-1:1});
+  var fresh=cards.filter(function(c){return !P.cards[c.key]});
+  return due.concat(fresh.slice(0,newCap())).map(function(c){return c.key});
+}
+function itemOf(key){var p=key.split(':'),n=+p[0];return {n:n,it:(state.items[n]||[]).filter(function(i){return i.id===p[1]})[0]}}
+function setStats(n){
+  var its=state.items[n]||[],ch=its.filter(function(i){return i.type==='learn'}),cs=its.filter(isCard);
+  var done=ch.filter(function(i){return state.P.done[n+':'+i.id]}).length;
+  var seen=cs.filter(function(i){return state.P.cards[n+':'+i.id]}).length;
+  var due=cs.filter(function(i){return isDue(n+':'+i.id)}).length;
+  var tot=ch.length+cs.length;
+  return {ch:ch.length,cs:cs.length,done:done,seen:seen,due:due,tot:tot,pct:tot?Math.round((done+seen)/tot*100):0};
+}
+function curSet(){var t=today();for(var i=0;i<SYL.length;i++){if(t>=SYL[i].start&&t<=endOf(SYL[i].n))return SYL[i]}for(var j=0;j<SYL.length;j++){if(SYL[j].start>t)return SYL[j]}return SYL[SYL.length-1]}
+function streak(){var d=today(),n=0,D=state.P.daily;if(!(D[d]&&D[d].r>0))d=addD(d,-1);while(D[d]&&D[d].r>0){n++;d=addD(d,-1)}return n}
+function sched(c,r){
+  var t=today(),i=c?c.i:0,e=c?c.e:2.5,n=c?c.n:0,l=c?c.l:0;
+  if(r===1){return {i:0,e:Math.max(1.3,e-.2),n:0,l:l+1,due:t,r:r,t:Date.now()}}
+  if(r===2){i=Math.max(1,Math.round((i||1)*1.2));e=Math.max(1.3,e-.15)}
+  else if(r===3){i=n===0?1:n===1?3:Math.round(i*e)}
+  else{i=n===0?3:Math.round(Math.max(i,1)*e*1.3);e=e+.15}
+  i=Math.max(1,i);
+  return {i:i,e:e,n:n+1,l:l,due:addD(t,i),r:r,t:Date.now()};
+}
+
+/* ---------- routing and rendering ---------- */
+function route(){
+  var h=location.hash.replace(/^#/,'')||'dashboard',m=h.match(/^set-(\d+)(?:-(learn|speak|retrieve|saq|viva|los|docs|trials|refs))?$/);
+  if(m&&+m[1]>=1&&+m[1]<=36)return {name:'set',n:+m[1],tab:m[2]||null};
+  return {name:['dashboard','review','weak','data'].indexOf(h)>-1?h:'dashboard'};
+}
+function renderNav(r){
+  var due=allCards(null).filter(function(c){return isDue(c.key)}).length;
+  var items=[['dashboard','Dashboard'],['review','Review'],['weak','Weak spots'],['data','Data']];
+  document.getElementById('nav').innerHTML=items.map(function(x){
+    var on=r.name===x[0]||(x[0]==='dashboard'&&r.name==='set');
+    return '<a href="#'+x[0]+'" class="'+(on?'on':'')+'">'+x[1]+(x[0]==='review'&&due?'<span class="badge">'+due+'</span>':'')+'</a>'}).join('');
+}
+function render(){
+  stopClock();
+  var r=route();renderNav(r);
+  var html='';
+  html+=banners();
+  if(state.practice)html+=rPractice();
+  else if(r.name==='dashboard')html+=rDash();
+  else if(r.name==='set')html+=rSet(r);
+  else if(r.name==='review')html+=rReview();
+  else if(r.name==='weak')html+=rWeak();
+  else html+=rData();
+  app.innerHTML=html;hydrateAudio(app);
+  if(state.practice&&state.practice.started&&!state.practice.stopped)startClock();
+  window.scrollTo(0,state._scroll||0);state._scroll=0;
+}
+function refresh(){
+  var r=route();
+  if(state.practice||(r.name==='review'&&state.session&&!state.session.done))return renderNav(r);
+  state._scroll=window.scrollY;render();
+}
+function banners(){
+  var b='';
+  if(state.slow&&!state.gotSets)b+='<div class="banner">Still trying to reach your study content. If this stays, check your connection and reload.</div>';
+  if(state.saveErr)b+='<div class="banner bad">Your latest progress could not be saved ('+esc(state.saveErr)+'). Keep this window open and use Data, then Back up progress, to save a copy.</div>';
+  return b;
+}
+function toast(m){var t=document.getElementById('toast');t.innerHTML='<div class="toast">'+esc(m)+'</div>';setTimeout(function(){t.innerHTML=''},2600)}
+
+/* dashboard */
+function rDash(){
+  var t=today(),P=state.P,cards=allCards(null),dueN=cards.filter(function(c){return isDue(c.key)}).length;
+  var freshN=Math.min(newCap(),cards.filter(function(c){return !P.cards[c.key]}).length);
+  var rev=(P.daily[t]&&P.daily[t].r)||0,cur=curSet(),qn=dueN+freshN;
+  var h='<div class="eyebrow">'+fmt(t)+' '+new Date().getFullYear()+'</div><h1>Your Final Exam study system</h1>';
+  h+='<p class="sub">36 weekly sets from '+fmt(SYL[0].start)+' 2026 to '+fmt(endOf(36))+' 2027. Study content is added set by set.</p>';
+  h+='<div class="kpis"><div class="kpi hot"><b>'+dueN+'</b><span>questions due now</span></div><div class="kpi"><b>'+freshN+'</b><span>new available today</span></div><div class="kpi"><b>'+rev+'</b><span>reviewed today</span></div><div class="kpi"><b>'+streak()+'</b><span>day streak</span></div></div>';
+  h+='<div class="row" style="margin-bottom:20px"><button class="btn primary" data-act="reviewAll"'+(qn?'':' disabled')+'>Start review'+(qn?' ('+qn+')':'')+'</button>';
+  var cs=state.sets[cur.n];
+  h+='<a class="btn" href="#set-'+cur.n+'">This week: Set '+cur.n+'</a></div>';
+  // catch-up
+  var behind=SYL.filter(function(s){if(endOf(s.n)>=t)return false;var st=setStats(s.n);return st.pct<100});
+  if(behind.length){
+    h+='<div class="card"><h2>Catch-up</h2><p class="mut" style="margin:0 0 10px">Weeks that have ended with study still to do.</p>';
+    h+=behind.slice(0,6).map(function(s){var st=setStats(s.n);var why=st.tot?st.pct+'% done':'no content yet';return '<a class="row" href="#set-'+s.n+'" style="justify-content:space-between;padding:6px 0;border-top:1px solid var(--line)"><span><b class="mono">'+pad(s.n)+'</b> &nbsp;'+esc(s.title)+'</span><span class="chip '+(st.tot?'warn':'mute')+'">'+why+'</span></a>'}).join('');
+    if(behind.length>6)h+='<p class="mut" style="margin:10px 0 0">and '+(behind.length-6)+' more weeks.</p>';
+    h+='</div>';
+  }
+  h+='<h2>All study sets</h2><div class="syl">';
+  h+=SYL.map(function(s){
+    var st=setStats(s.n),c=(state.sets[s.n]||{}).counts||{},tot=cnt(c);
+    var empty=!tot,pc=[0,1,2].map(function(k){var n2=0,pre=s.n+':';Object.keys(state.P.los).forEach(function(kk){if(kk.indexOf(pre)===0&&state.P.los[kk][k])n2++});return n2});
+    var label=empty?(state.gotSets?'No content yet':'Checking…'):'Learn / retrieve / speak '+st.pct+'%';
+    return '<a class="srow'+(s.n===cur.n?' cur':'')+(empty?' empty':'')+'" href="#set-'+s.n+'"><span class="num">'+pad(s.n)+'</span><span class="stitle"><b>'+esc(s.title)+(empty?' <span class="chip mute">Empty</span>':'')+(st.due?' <span class="chip warn">'+st.due+' due</span>':'')+'</b><small>'+fmt(s.start)+' – '+fmt(endOf(s.n))+'</small></span><span class="sstat"><small class="mut">'+label+'</small><span class="bar"><i style="width:'+(empty?0:st.pct)+'%"></i></span></span>'+['First','Second','Third'].map(function(nm,i){return '<span class="spass"><small class="mut">'+nm+' pass</small><b>'+pc[i]+'/'+s.lo+'</b><span class="bar"><i style="width:'+(s.lo?Math.round(pc[i]/s.lo*100):0)+'%"></i></span></span>'}).join('')+'</a>';
+  }).join('');
+  return h+'</div>';
+}
+
+/* set view */
+function rSet(r){
+  var s=SYL[r.n-1],sd=state.sets[r.n]||{},c=sd.counts||{},its=state.items[r.n]||[],st=setStats(r.n);
+  var tab=r.tab;if(!tab){tab=['learn','speak','retrieve','saq','viva','los','docs','trials','refs'].filter(function(k){return c[k]})[0]||'learn'}
+  var h='<a class="mut" href="#dashboard">← Dashboard</a><div class="eyebrow" style="margin-top:12px">Set '+r.n+' · '+fmt(s.start)+' – '+fmt(endOf(r.n))+'</div><h1>'+esc(s.title)+'</h1>';
+  if(sd.note)h+='<p class="sub">'+esc(sd.note)+'</p>';else h+='<p class="sub">'+s.lo+' learning outcomes this week.</p>';
+  var ls=losStats(r.n);
+  h+='<div class="prog" style="height:8px;margin:10px 0 6px"><i style="width:'+st.pct+'%"></i></div><div class="mut" style="font-size:13px;margin-bottom:14px">'+st.pct+'% of chapters and questions attempted ('+(st.done+st.seen)+' of '+st.tot+')</div>';
+  if(ls.tot)h+='<div class="kpis" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:6px">'+['First','Second','Third'].map(function(nm,i){return '<div class="kpi"><span>'+nm+' pass</span><b style="font-size:22px">'+ls.p[i]+'/'+ls.tot+'</b><div class="bar" style="margin-top:8px"><i style="width:'+Math.round(ls.p[i]/ls.tot*100)+'%"></i></div></div>'}).join('')+'</div>';
+  var tabs=[['learn','Learn',c.learn||0],['speak','Speak',c.speak||0],['retrieve','Retrieve',c.retrieve||0],['saq','SAQ',c.saq||0],['viva','Viva',c.viva||0],['los','Learning Outcomes',c.los||0],['docs','Professional Documents',c.docs||0],['trials','Landmark Trials',0],['refs','References',0]];
+  h+='<div class="tabs">'+tabs.map(function(x){return '<a href="#set-'+r.n+'-'+x[0]+'" class="'+(tab===x[0]?'on':'')+'">'+x[1]+(x[2]?'<small>'+x[2]+'</small>':'')+'</a>'}).join('')+'</div>';
+  var list=sortItems(its.filter(function(i){return i.type===tab}));
+  if(!cnt(c)){
+    return h+'<div class="empty"><b>No study content for this set yet.</b><br>Ask Claude to write Set '+r.n+' and it will appear here.</div>';
+  }
+  if(!list.length){
+    if(tab==='docs'&&state.loaded[r.n]!==undefined)return h+'<div class="empty">No professional document summaries have been added for this set yet.</div>';
+    return h+'<div class="empty">'+(state.loaded[r.n]===undefined?'Loading this set…':'Nothing in this section yet.')+'</div>';
+  }
+  if(tab==='los'){
+    list.forEach(function(d){(d.groups||[]).forEach(function(g,gi){
+      var keys=(g.items||[]).map(function(x){return r.n+':'+gi+':'+x.code}),L=state.P.los;
+      var c3=[0,1,2].map(function(k){return keys.filter(function(kk){return L[kk]&&L[kk][k]}).length});
+      h+='<div class="lobox"><div class="lotitle"><span class="chip '+priCls((g.pri||'').split(' ')[0])+'">'+esc((g.pri||'').replace(/\s*\(.*$/,''))+'</span><span style="flex:1">'+esc(g.title)+'</span></div>';
+      h+='<div class="lohead"><span>Learning outcome</span><span>First pass '+c3[0]+'/'+keys.length+'</span><span>Second pass '+c3[1]+'/'+keys.length+'</span><span>Third pass '+c3[2]+'/'+keys.length+'</span></div>';
+      (g.items||[]).forEach(function(x,xi){
+        var lines=x.text||[],head=[],bl=[];lines.forEach(function(t){if(t.charAt(0)==='•')bl.push(t.replace(/^•\s*/,''));else head.push(t)});
+        var k=keys[xi],v=L[k]||[];
+        h+='<div class="lorow"><div class="lt"><b class="mono">'+esc(x.code)+'</b> <span class="chip mute">'+esc(x.kind.replace('EXACT ','').replace(' · ',' · '))+'</span>'+head.map(function(t){return '<p>'+inl(t)+'</p>'}).join('')+(bl.length?'<ul>'+bl.map(function(t){return '<li>'+inl(t)+'</li>'}).join('')+'</ul>':'')+'<div class="mut mono" style="font-size:11.5px">'+esc(x.ecode)+' · '+esc(x.scope)+'</div></div>'+[0,1,2].map(function(i){return '<button class="pass'+(v[i]?' on':'')+'" data-act="losPass" data-key="'+esc(k)+'" data-i="'+i+'">'+(v[i]?'✓ Complete':'Incomplete')+'</button>'}).join('')+'</div>';
+      });
+      h+='</div>';
+    })});
+    return h;
+  }
+  if(tab==='trials'||tab==='refs'||tab==='docs'){
+    return h+list.map(function(it){return '<div class="card"><h2 style="margin-top:0">'+esc(it.title||'')+'</h2><div class="md">'+md(it.body)+'</div></div>'}).join('');
+  }
+  if(tab==='learn'){
+    h+=list.map(function(it){
+      var key=r.n+':'+it.id,done=state.P.done[key],open=state.open[key];
+      return '<details class="ch" data-key="'+key+'"'+(open?' open':'')+'><summary><span>'+esc(it.title)+'</span><span class="row" style="gap:6px"><span class="chip '+priCls(pri(it))+'">'+esc(it.priority||'')+'</span>'+(done?'<span class="chip good" data-doneflag>Done</span>':'<span data-doneflag></span>')+'</span></summary><div class="inner">'+(it.los?'<p class="mut" style="font-size:13px"><span class="eyebrow">Learning outcomes</span><br>'+esc(it.los)+'</p>':'')+'<div class="md">'+md(it.body)+'</div><div class="row" style="margin-top:18px"><button class="btn'+(done?'':' primary')+'" data-act="done" data-key="'+key+'">'+(done?'Marked complete ✓':'Mark chapter complete')+'</button></div></div></details>';
+    }).join('');
+  }else if(tab==='retrieve'||tab==='speak'){
+    var q=buildQueue(r.n);
+    h+='<div class="row" style="margin-bottom:14px;justify-content:space-between"><span class="mut">'+st.seen+' of '+st.cs+' questions started · '+st.due+' due</span><button class="btn primary" data-act="studySet" data-n="'+r.n+'"'+(q.length?'':' disabled')+'>Study this set'+(q.length?' ('+q.length+')':'')+'</button></div>';
+    h+=list.map(function(it){
+      var key=r.n+':'+it.id,c2=state.P.cards[key],chip=statusChip(c2);
+      var rates=[1,2,3,4].map(function(r2){var lab=['Again','Hard','Good','Easy'][r2-1],nx=r2===1?'today':ivl(sched(c2,r2).i);return '<button class="rate r'+r2+'" data-act="rateInline" data-key="'+key+'" data-r="'+r2+'">'+lab+'<small>'+nx+'</small></button>'}).join('');
+      return '<details class="ch qd" data-key="'+key+'"'+(state.open[key]?' open':'')+'><summary><span>'+esc(it.title)+(it.sub?'<br><small class="mut">'+esc(it.sub)+(it.target?' · target '+it.target+' s':'')+'</small>':'')+'</span><span class="row" style="gap:6px"><span class="chip '+priCls(pri(it))+'">'+esc(pri(it))+'</span><span data-status>'+chip+'</span></span></summary><div class="inner">'+(it.type==='retrieve'?'<div class="qtext">'+esc(it.q)+'</div>':'<p class="mut" style="margin:12px 0">Say it out loud first'+(it.target?' · target '+it.target+' s':'')+'</p>')+'<div class="attin">'+attInput(key,it)+'</div><div class="row" style="margin-top:12px"><button class="btn primary" data-act="showA">Show model answer</button></div><div class="ansbox" hidden><div class="md">'+md(it.a)+'</div><div class="eyebrow" style="margin-top:16px">How well did you know it?</div><div class="rates">'+rates+'</div></div><div class="attlist">'+attHtml(key)+'</div></div></details>';
+    }).join('');
+  }else{
+    var store=tab==='saq'?state.P.saq:state.P.viva;
+    h+=list.map(function(it){
+      var key=r.n+':'+it.id,res=store[key],chip=res?'<span class="chip '+(res.score>=.7?'good':res.score>=.5?'warn':'bad')+'">Last '+Math.round(res.score*100)+'%</span>':'<span class="chip mute">Not attempted</span>';
+      return '<button class="qrow" data-act="practice" data-type="'+tab+'" data-key="'+key+'"><span class="qt">'+esc(it.title)+(it.source?'<br><small class="mut">'+esc(it.source)+'</small>':'')+'</span><span class="chips"><span class="chip mute">'+(it.minutes||10)+' min</span>'+chip+'</span></button>';
+    }).join('');
+  }
+  return h;
+}
+
+/* review */
+function rReview(){
+  var s=state.session;
+  if(!s||(s.done&&!s.stats.some(Boolean))){var keys=buildQueue(null);state.session=s={keys:keys,idx:0,revealed:false,ans:'',stats:[0,0,0,0],scope:'all',done:!keys.length}}
+  if(s.done||s.idx>=s.keys.length){
+    s.done=true;var tot=s.stats.reduce(function(a,b){return a+b},0);
+    if(!tot)return '<div class="empty"><b>Nothing is due right now.</b><br>New questions appear as content is added. Come back later or open a set to study ahead.<div style="margin-top:14px"><a class="btn" href="#dashboard">Dashboard</a></div></div>';
+    return '<div class="eyebrow">Session complete</div><h1>'+tot+' reviewed</h1><div class="kpis" style="margin-top:16px"><div class="kpi"><b style="color:var(--bad)">'+s.stats[0]+'</b><span>Again</span></div><div class="kpi"><b style="color:var(--warn)">'+s.stats[1]+'</b><span>Hard</span></div><div class="kpi"><b style="color:var(--good)">'+s.stats[2]+'</b><span>Good</span></div><div class="kpi"><b style="color:var(--accent)">'+s.stats[3]+'</b><span>Easy</span></div></div><div class="row"><a class="btn primary" href="#dashboard">Dashboard</a><a class="btn" href="#weak">Weak spots</a></div>';
+  }
+  var key=s.keys[s.idx],o=itemOf(key),it=o.it;
+  if(!it){s.idx++;return rReview()}
+  var c=state.P.cards[key];
+  var h='<div class="row" style="justify-content:space-between"><span class="eyebrow">'+(s.scope==='all'?'Review':'Set '+s.scope+' session')+' · '+(s.idx+1)+' of '+s.keys.length+'</span><a class="mut" href="#dashboard" data-act="endSession">End session</a></div>';
+  h+='<div class="prog" style="margin-top:8px"><i style="width:'+Math.round(s.idx/s.keys.length*100)+'%"></i></div>';
+  h+='<div class="card"><div class="row"><span class="chip">Set '+o.n+'</span><span class="chip '+priCls(pri(it))+'">'+esc(it.priority||'')+'</span>'+(c?'<span class="chip mute">Seen '+c.n+'×</span>':'<span class="chip mute">New</span>')+'</div>';
+  h+='<div class="eyebrow" style="margin-top:14px">'+esc(it.eyebrow||it.title)+'</div><div class="qtext">'+esc(it.q)+'</div>'+(it.type==='speak'?'<p class="mut" style="margin:8px 0 0">Say it out loud'+(it.target?' · target '+it.target+' s':'')+'</p>':'');
+  h+='<textarea id="ans" data-bind="ans" placeholder="Answer first, in your own words or out loud. Typing is optional.">'+esc(s.ans)+'</textarea>';
+  if(!s.revealed)h+='<div class="row" style="margin-top:14px"><button class="btn primary" data-act="reveal">Reveal model answer</button><span class="mut" style="font-size:13px">Space also reveals</span></div>';
+  h+='</div>';
+  if(s.revealed){
+    h+='<div class="card"><div class="eyebrow" style="margin-bottom:6px">Model answer</div><div class="md">'+md(it.a)+'</div>'+attHtml(s.keys[s.idx])+'</div>';
+    h+='<div class="eyebrow">How well did you know it?</div><div class="rates">'+[1,2,3,4].map(function(r){var lab=['Again','Hard','Good','Easy'][r-1],nx=r===1?'today':ivl(sched(c,r).i);return '<button class="rate r'+r+'" data-act="rate" data-r="'+r+'">'+lab+'<small>'+r+' · '+nx+'</small></button>'}).join('')+'</div>';
+  }
+  return h;
+}
+
+/* weak spots */
+function rWeak(){
+  var P=state.P,arr=[];
+  Object.keys(P.cards).forEach(function(k){var c=P.cards[k];if(c.l>0||c.r<=2){arr.push({k:k,c:c,s:c.l*2+(2.5-c.e)+(c.r<=2?1:0)})}});
+  arr.sort(function(a,b){return b.s-a.s});arr=arr.slice(0,12).filter(function(a){return itemOf(a.k).it});
+  var low=[];['saq','viva'].forEach(function(t){Object.keys(P[t]).forEach(function(k){if(P[t][k].score<.6){var o=itemOf(k);low.push({t:t,k:k,res:P[t][k]})}})});
+  var h='<h1>Weak spots</h1><p class="sub">Questions you keep missing, and written or viva practice scoring under 60%.</p>';
+  if(!arr.length&&!low.length)return h+'<div class="empty"><b>Nothing flagged yet.</b><br>Weak spots appear after you rate questions Again or Hard.</div>';
+  if(arr.length){
+    h+='<div class="row" style="margin-bottom:12px;justify-content:space-between"><h2 style="margin:0">Questions</h2><button class="btn primary" data-act="studyWeak">Review these ('+arr.length+')</button></div>';
+    h+=arr.map(function(a){var o=itemOf(a.k);return '<button class="qrow" data-act="oneQ" data-key="'+a.k+'"><span class="qt">'+esc(o.it.title)+'<br><small class="mut">Set '+o.n+'</small></span><span class="chips"><span class="chip bad">'+a.c.l+' lapse'+(a.c.l===1?'':'s')+'</span><span class="chip mute">ease '+a.c.e.toFixed(2)+'</span></span></button>'}).join('');
+    state._weak=arr.map(function(a){return a.k});
+  }
+  if(low.length){
+    h+='<h2 style="margin-top:24px">SAQ and viva</h2>'+low.map(function(l){var o=itemOf(l.k);if(!o.it)return '';return '<button class="qrow" data-act="practice" data-type="'+l.t+'" data-key="'+l.k+'"><span class="qt">'+esc(o.it.title)+'<br><small class="mut">Set '+o.n+' · '+l.t.toUpperCase()+'</small></span><span class="chips"><span class="chip bad">'+Math.round(l.res.score*100)+'%</span></span></button>'}).join('');
+  }
+  return h;
+}
+
+/* data */
+function rData(){
+  var h='<h1>Data</h1><p class="sub">Progress is saved on this device and works offline. Use the backup below to keep a copy or move progress to another device.</p>';
+  h+='<div class="card"><h2>Daily new questions</h2><div class="row"><input type="number" id="newPer" min="0" max="100" value="'+state.P.settings.newPerDay+'" data-bind="newPer"><span class="mut">new questions introduced per day, on top of anything due</span></div></div>';
+  h+='<div class="two"><div class="card"><h2>Progress</h2><p class="mut" style="margin-top:0">Reviews, completed chapters, SAQ and viva scores.</p><div class="row"><button class="btn" data-act="backup">Back up progress</button><label class="btn" for="restoreFile">Restore</label><input type="file" id="restoreFile" accept=".json,application/json" hidden></div></div>';
+  h+='<div class="card"><h2>Study content</h2><p class="mut" style="margin-top:0">Every set, chapter and question currently loaded, as one portable file.</p><div class="row"><button class="btn" data-act="exportContent">Export content</button></div></div></div>';
+  return h;
+}
+
+/* practice (SAQ and viva) */
+function rPractice(){
+  var p=state.practice,it=p.it,h='<a class="mut" href="#set-'+p.n+'-'+p.type+'" data-act="endPractice">← Back to Set '+p.n+'</a>';
+  if(p.type==='saq'){
+    var total=(p.it.minutes||10)*60;
+    h+='<div class="eyebrow" style="margin-top:12px">Set '+p.n+' · SAQ · '+(it.minutes||10)+' minutes</div><h1>'+esc(it.title)+'</h1>';
+    if(it.source)h+='<p class="sub">'+esc(it.source)+'</p>';
+    h+='<div class="card"><div class="row" style="justify-content:space-between"><div class="timer" id="clock">'+mmss(total-p.elapsed)+'</div><div class="row">'+(p.revealed?'':(p.started&&!p.stopped?'<button class="btn" data-act="stopClock">Pause</button>':'<button class="btn primary" data-act="startClock">'+(p.elapsed?'Resume':'Start timer')+'</button>'))+'</div></div>';
+    h+='<div class="qtext">'+esc(it.q)+'</div><textarea id="ans" data-bind="ans" style="min-height:220px" placeholder="Write your answer here. Aim for the points a marker would look for.">'+esc(p.ans)+'</textarea>';
+    if(!p.revealed)h+='<div class="row" style="margin-top:14px"><button class="btn primary" data-act="revealPractice">Finish and show model answer</button></div>';
+    h+='</div>';
+    if(p.revealed){
+      var got=p.checks.filter(Boolean).length,n=(it.rubric||[]).length;
+      h+='<div class="two"><div class="card"><h2>Marking checklist</h2>'+(it.rubric||[]).map(function(r,i){return '<label class="check"><input type="checkbox" data-act="tick" data-i="'+i+'"'+(p.checks[i]?' checked':'')+'><span>'+esc(r)+'</span></label>'}).join('')+'<div class="row" style="margin-top:14px;justify-content:space-between"><b id="score" class="mono">'+got+' of '+n+'</b><button class="btn primary" data-act="saveScore">Save score</button></div></div>';
+      h+='<div class="card"><h2>Model answer</h2><div class="md">'+md(it.model)+'</div></div></div>';
+    }
+    return h;
+  }
+  var st=it.stages||[],i=p.stage;
+  h+='<div class="eyebrow" style="margin-top:12px">Set '+p.n+' · Viva · '+(it.minutes||10)+' minutes</div><h1>'+esc(it.title)+'</h1>';
+  if(it.source)h+='<p class="sub">'+esc(it.source)+'</p>';
+  if(p.finished){
+    var tot=0,got2=0;st.forEach(function(s,a){(s.points||[]).forEach(function(_,b){tot++;if(p.ticks[a+'.'+b])got2++})});
+    return h+'<div class="card"><h2>Viva finished</h2><div class="kpis" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="kpi hot"><b>'+got2+'/'+tot+'</b><span>examiner points covered</span></div><div class="kpi"><b>'+mmss(p.elapsed)+'</b><span>time used</span></div></div><div class="row"><button class="btn primary" data-act="saveViva">Save result</button><a class="btn" href="#set-'+p.n+'-viva" data-act="endPractice">Back</a></div></div>';
+  }
+  h+='<div class="card"><div class="row" style="justify-content:space-between"><div class="timer'+(p.elapsed>(it.minutes||10)*60?' over':'')+'" id="clock">'+mmss(p.elapsed)+'</div><div class="row">'+(p.started&&!p.stopped?'<button class="btn" data-act="stopClock">Pause</button>':'<button class="btn primary" data-act="startClock">'+(p.elapsed?'Resume':'Start timer')+'</button>')+'</div></div>';
+  h+='<div class="eyebrow" style="margin-top:14px">Stem</div><div class="qtext" style="margin-top:4px">'+esc(it.stem)+'</div>';
+  h+='<div class="eyebrow">Examiner question '+(i+1)+' of '+st.length+'</div><div class="qtext" style="margin-top:4px"><b>'+esc(st[i].prompt)+'</b></div>';
+  h+='<p class="mut" style="margin:0 0 12px">Answer out loud as you would to the examiner, then show the points.</p>';
+  if(!p.shown)h+='<button class="btn primary" data-act="showPoints">Show examiner points</button>';
+  else{
+    h+=(st[i].points||[]).map(function(pt,b){return '<label class="check"><input type="checkbox" data-act="vtick" data-k="'+i+'.'+b+'"'+(p.ticks[i+'.'+b]?' checked':'')+'><span>'+esc(pt)+'</span></label>'}).join('');
+    h+='<div class="row" style="margin-top:14px"><button class="btn primary" data-act="nextStage">'+(i+1<st.length?'Next question':'Finish viva')+'</button></div>';
+  }
+  return h+'</div>';
+}
+function startClock(){
+  var p=state.practice;if(!p)return;p.started=true;p.stopped=false;stopClock();
+  p.t0=Date.now()-p.elapsed*1000;
+  clock=setInterval(function(){
+    var el=document.getElementById('clock');if(!el||!state.practice){stopClock();return}
+    p.elapsed=(Date.now()-p.t0)/1000;
+    var total=(p.it.minutes||10)*60;
+    if(p.type==='saq'){el.textContent=mmss(total-p.elapsed);if(p.elapsed>total)el.classList.add('over')}
+    else{el.textContent=mmss(p.elapsed);if(p.elapsed>total)el.classList.add('over')}
+  },500);
+}
+function stopClock(){if(clock){clearInterval(clock);clock=null}}
+
+/* ---------- actions ---------- */
+function startSession(keys,scope){
+  state.session={keys:keys,idx:0,revealed:false,ans:'',stats:[0,0,0,0],scope:scope||'all',done:!keys.length};
+  if(location.hash!=='#review')location.hash='review';else render();
+}
+function rate(r){
+  var s=state.session,key=s.keys[s.idx],P=state.P,prev=P.cards[key],t=today(),d=P.daily[t]||{r:0,n:0};
+  P.cards[key]=sched(prev,r);d.r++;if(!prev)d.n++;P.daily[t]=d;s.stats[r-1]++;
+  if(r===1)s.keys.push(key);
+  s.idx++;s.revealed=false;s.ans='';saveP();render();window.scrollTo(0,0);
+}
+
+function fmtAt(iso){try{return new Date(iso).toLocaleString('en-NZ',{day:'numeric',month:'short',year:'numeric',hour:'numeric',minute:'2-digit'})}catch(e){return iso}}
+function attHtml(key){
+  var L=state.P.att[key]||[];if(!L.length)return '';
+  return '<div class="eyebrow" style="margin-top:16px">Your previous attempts ('+L.length+')</div>'+L.slice().reverse().map(function(a,ri){var i=L.length-1-ri;
+    return '<div class="attitem"><div class="row" style="justify-content:space-between"><span class="mut" style="font-size:13px">'+esc(fmtAt(a.at))+'</span><button class="btn" data-act="delAtt" data-key="'+key+'" data-i="'+i+'">Delete</button></div>'+(a.text?'<div class="atttext">'+esc(a.text)+'</div>':'')+(a.a?'<audio controls preload="none" data-aid="'+esc(a.a)+'"></audio>':'')+'</div>'}).join('');
+}
+function recHtml(key){
+  var p=state.pend[key]||{};
+  if(p.recording)return '<button class="btn primary" data-act="recStop" data-key="'+key+'">Stop recording</button><span class="mut" style="font-size:13px" data-rectime>Recording 0:00</span>';
+  if(p.prev)return '<audio controls src="'+p.prev+'"></audio><button class="btn" data-act="recDiscard" data-key="'+key+'">Discard</button><button class="btn" data-act="recStart" data-key="'+key+'">Re-record</button>';
+  return '<button class="btn" data-act="recStart" data-key="'+key+'">Record answer</button>'+(p.err?'<span class="mut" style="font-size:13px">'+esc(p.err)+'</span>':'')+'<label class="mut" style="font-size:13px;cursor:pointer;text-decoration:underline">or attach a voice memo<input type="file" accept="audio/*" data-bind="aud" data-key="'+key+'" hidden></label>';
+}
+function recRefresh(key){var el=document.querySelector('.recbox[data-key="'+key+'"]');if(el)el.innerHTML=recHtml(key)}
+function attInput(key,it){
+  var p=state.pend[key]||{},h='<textarea data-bind="att" data-key="'+key+'" placeholder="Your answer (optional). Saved with the date when you show the model answer.">'+esc(p.text||'')+'</textarea>';
+  if(it.type==='speak')h+='<div class="row recbox" style="margin-top:10px" data-key="'+key+'">'+recHtml(key)+'</div>';
+  return h;
+}
+async function commitAtt(key){
+  var p=state.pend[key];if(!p||(!(p.text||'').trim()&&!p.blob))return false;
+  var id=null;
+  if(p.blob){id='a'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);try{await idbSet('audio',id,p.blob)}catch(e){id=null;toast('Could not store the recording on this device')}}
+  var L=state.P.att[key]||(state.P.att[key]=[]);
+  L.push({at:new Date().toISOString(),text:(p.text||'').trim(),a:id});
+  if(p.prev)URL.revokeObjectURL(p.prev);
+  delete state.pend[key];saveP();return true;
+}
+var recTick=null;
+function saveFile(name,text){var u=URL.createObjectURL(new Blob([text],{type:'application/json'})),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000)}
+var A={
+  reviewAll:function(){startSession(buildQueue(null),'all')},
+  studySet:function(el){var n=+el.dataset.n;startSession(buildQueue(n),n)},
+  studyWeak:function(){startSession((state._weak||[]).slice(),'weak')},
+  showA:async function(el){var inn=el.closest('.inner'),key=el.closest('details').dataset.key;
+    var p0=state.pend[key];if(p0&&p0.recording){toast('Stop the recording first');return}
+    var ta=inn.querySelector('textarea');if(ta&&ta.value.trim()){(state.pend[key]=state.pend[key]||{}).text=ta.value}
+    var saved=await commitAtt(key);
+    inn.querySelector('.ansbox').hidden=false;el.hidden=true;
+    var inp=inn.querySelector('.attin');if(inp)inp.hidden=true;
+    var w=inn.querySelector('.attlist');w.innerHTML=attHtml(key);hydrateAudio(w);if(saved)toast('Answer saved')},
+  delAtt:function(el){var key=el.dataset.key,L=state.P.att[key];if(!L)return;var x=L.splice(+el.dataset.i,1)[0];if(x&&x.a)idbDel('audio',x.a);if(!L.length)delete state.P.att[key];saveP();var w=el.closest('.attlist');if(w){w.innerHTML=attHtml(key);hydrateAudio(w)}else{state._scroll=window.scrollY;render()}},
+  recStart:async function(el){
+    var key=el.dataset.key,p=(state.pend[key]=state.pend[key]||{});
+    if(!navigator.mediaDevices||!window.MediaRecorder){p.err='Recording is not supported here.';recRefresh(key);return}
+    try{
+      var stream=await navigator.mediaDevices.getUserMedia({audio:true});
+      var mr=new MediaRecorder(stream),chunks=[];
+      mr.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data)};
+      mr.onstop=function(){
+        stream.getTracks().forEach(function(t){t.stop()});clearInterval(recTick);
+        p.recording=false;p.blob=new Blob(chunks,{type:mr.mimeType||'audio/mp4'});if(p.prev)URL.revokeObjectURL(p.prev);p.prev=URL.createObjectURL(p.blob);p.rec=null;recRefresh(key)};
+      if(p.prev){URL.revokeObjectURL(p.prev);p.prev=null}p.blob=null;p.err='';
+      mr.start();p.rec=mr;p.recording=true;var t0=Date.now();recRefresh(key);
+      recTick=setInterval(function(){var e=document.querySelector('.recbox[data-key="'+key+'"] [data-rectime]');if(!e){return}var sec=Math.floor((Date.now()-t0)/1000);e.textContent='Recording '+Math.floor(sec/60)+':'+('0'+sec%60).slice(-2)},500);
+    }catch(err){p.err=err&&err.name==='NotAllowedError'?'Microphone access was blocked. Allow it in your browser settings.':'Could not start recording.';recRefresh(key)}
+  },
+  recStop:function(el){var p=state.pend[el.dataset.key];if(p&&p.rec&&p.rec.state!=='inactive')p.rec.stop()},
+  recDiscard:function(el){var key=el.dataset.key,p=state.pend[key];if(p){if(p.prev)URL.revokeObjectURL(p.prev);p.prev=null;p.blob=null}recRefresh(key)},
+  rateInline:function(el){
+    var key=el.dataset.key,r2=+el.dataset.r,P=state.P,prev=P.cards[key],t=today(),d=P.daily[t]||{r:0,n:0};
+    P.cards[key]=sched(prev,r2);d.r++;if(!prev)d.n++;P.daily[t]=d;saveP();
+    var det=el.closest('details');det.querySelector('[data-status]').innerHTML=statusChip(P.cards[key]);
+    det.open=false;state.open[key]=false;
+    var nx=det.nextElementSibling;
+    if(nx&&nx.tagName==='DETAILS'){nx.open=true;state.open[nx.dataset.key]=true;nx.scrollIntoView({block:'start',behavior:'smooth'})}
+    toast(r2===1?'Again: back in this session':'Saved')},
+  losPass:function(el){var k=el.dataset.key,i=+el.dataset.i,L=state.P.los;var v=(L[k]||[0,0,0]).slice();v[i]=v[i]?0:1;if(v.some(Boolean))L[k]=v;else delete L[k];saveP();state._scroll=window.scrollY;render()},
+  oneQ:function(el){startSession([el.dataset.key],+el.dataset.key.split(':')[0])},
+  endSession:function(){state.session=null},
+  reveal:function(){var s=state.session;if(s.ans&&s.ans.trim()){var k=s.keys[s.idx],L=state.P.att[k]||(state.P.att[k]=[]);L.push({at:new Date().toISOString(),text:s.ans.trim(),a:null});saveP()}state.session.revealed=true;state._scroll=window.scrollY;render()},
+  rate:function(el){rate(+el.dataset.r)},
+  done:function(el){
+    var k=el.dataset.key,P=state.P;if(P.done[k])delete P.done[k];else P.done[k]=today();
+    var on=!!P.done[k];el.textContent=on?'Marked complete ✓':'Mark chapter complete';el.classList.toggle('primary',!on);
+    var flag=el.closest('details').querySelector('[data-doneflag]');flag.className=on?'chip good':'';flag.textContent=on?'Done':'';
+    saveP();
+  },
+  practice:function(el){
+    var key=el.dataset.key,o=itemOf(key),type=el.dataset.type;if(!o.it)return;
+    state.practice={type:type,n:o.n,key:key,it:o.it,elapsed:0,started:false,stopped:false,revealed:false,ans:'',checks:[],stage:0,shown:false,ticks:{},finished:false};
+    state._scroll=0;render();
+  },
+  endPractice:function(){stopClock();state.practice=null;render()},
+  startClock:function(){var p=state.practice;p.started=true;p.stopped=false;state._scroll=window.scrollY;render()},
+  stopClock:function(){var p=state.practice;stopClock();p.stopped=true;p.started=false;state._scroll=window.scrollY;render()},
+  revealPractice:function(){var p=state.practice;stopClock();p.revealed=true;p.stopped=true;p.checks=[];state._scroll=window.scrollY;render()},
+  tick:function(el){var p=state.practice;p.checks[+el.dataset.i]=el.checked;var n=(p.it.rubric||[]).length;document.getElementById('score').textContent=p.checks.filter(Boolean).length+' of '+n},
+  saveScore:function(){var p=state.practice,n=(p.it.rubric||[]).length||1;state.P.saq[p.key]={score:p.checks.filter(Boolean).length/n,at:today(),secs:Math.round(p.elapsed)};saveP();toast('Score saved')},
+  showPoints:function(){state.practice.shown=true;state._scroll=window.scrollY;render()},
+  vtick:function(el){state.practice.ticks[el.dataset.k]=el.checked},
+  nextStage:function(){var p=state.practice,n=(p.it.stages||[]).length;if(p.stage+1<n){p.stage++;p.shown=false}else{p.finished=true;stopClock()}render();window.scrollTo(0,0)},
+  saveViva:function(){var p=state.practice,tot=0,got=0;(p.it.stages||[]).forEach(function(s,a){(s.points||[]).forEach(function(_,b){tot++;if(p.ticks[a+'.'+b])got++})});state.P.viva[p.key]={score:tot?got/tot:0,at:today(),secs:Math.round(p.elapsed)};saveP();toast('Result saved')},
+  backup:function(){saveFile('anzca-progress-'+today()+'.json',JSON.stringify(state.P,null,1));toast('Backup saved')},
+  exportContent:function(){saveFile('anzca-content-'+today()+'.json',JSON.stringify({exported:today(),sets:state.sets,items:state.items}));toast('Content exported')}
+};
+app.addEventListener('click',function(e){
+  var t=e.target.closest('[data-act]');if(!t)return;
+  var f=A[t.dataset.act];if(!f)return;
+  if(t.tagName==='INPUT'&&t.type==='checkbox'){f(t,e);return}
+  if(t.tagName==='A'&&t.dataset.act!=='endPractice'&&t.dataset.act!=='endSession')return;
+  f(t,e);
+});
+app.addEventListener('change',function(e){
+  var t=e.target;
+  if(t.dataset&&t.dataset.bind==='aud'&&t.files&&t.files[0]){
+    var key=t.dataset.key,p=(state.pend[key]=state.pend[key]||{});
+    p.blob=t.files[0];if(p.prev)URL.revokeObjectURL(p.prev);p.prev=URL.createObjectURL(p.blob);recRefresh(key);return}
+  if(t.matches&&t.matches('input[type=checkbox][data-act]')&&A[t.dataset.act])A[t.dataset.act](t,e);
+  if(t.id==='newPer'){var v=Math.max(0,Math.min(100,parseInt(t.value,10)||0));state.P.settings.newPerDay=v;saveP();toast('Saved')}
+  if(t.id==='restoreFile'&&t.files&&t.files[0]){
+    var rd=new FileReader();
+    rd.onload=function(){try{var d=JSON.parse(rd.result);if(!d||typeof d!=='object'||!d.cards)throw new Error('x');state.P=normP(d);saveP();toast('Progress restored');render()}catch(err){toast('That file is not a progress backup')}};
+    rd.readAsText(t.files[0]);
+  }
+});
+app.addEventListener('input',function(e){
+  var t=e.target;if(t.dataset&&t.dataset.bind==='att'){(state.pend[t.dataset.key]=state.pend[t.dataset.key]||{}).text=t.value;return}if(t.dataset&&t.dataset.bind==='ans'){if(state.practice)state.practice.ans=t.value;else if(state.session)state.session.ans=t.value}
+});
+app.addEventListener('toggle',function(e){var d=e.target;if(d.tagName==='DETAILS'&&d.dataset.key)state.open[d.dataset.key]=d.open},true);
+document.addEventListener('keydown',function(e){
+  var s=state.session;if(route().name!=='review'||!s||s.done||state.practice)return;
+  var tag=(e.target.tagName||'').toLowerCase();if(tag==='textarea'||tag==='input')return;
+  if(!s.revealed&&(e.key===' '||e.key==='Enter')){e.preventDefault();A.reveal()}
+  else if(s.revealed&&/^[1-4]$/.test(e.key)){rate(+e.key)}
+});
+window.addEventListener('hashchange',function(){stopClock();state.practice=null;state._scroll=0;if(state.session&&state.session.done&&route().name!=='review')state.session=null;render()});
+document.addEventListener('visibilitychange',function(){if(document.hidden&&dirty){try{flush()}catch(e){}}});
+window.addEventListener('pagehide',function(){if(dirty){try{flush()}catch(e){}}});
+init();
+})();
+</script>
+</body></html>
