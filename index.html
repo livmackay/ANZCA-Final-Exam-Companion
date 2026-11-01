@@ -111,6 +111,7 @@ details.ch .inner{padding:2px 20px 20px;border-top:1px solid var(--line)}
 .qtext{font-family:var(--read);font-size:19px;line-height:1.55;margin:10px 0 16px}
 [hidden]{display:none!important}
 .attitem{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:8px}.atttext{white-space:pre-wrap;margin-top:6px;line-height:1.55}.attitem audio,.recbox audio,.attin audio{width:100%;max-width:420px;margin-top:8px}.attin textarea{min-height:90px;margin-top:6px}
+input[type=email],input[type=password]{font:15px/1.5 var(--ui);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
 textarea{width:100%;min-height:120px;resize:vertical;font:15px/1.5 var(--ui);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px}
 input[type=number]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:80px}
 .prog{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin-bottom:16px}
@@ -230,9 +231,9 @@ function losStats(n){var tot=0,p=[0,0,0];(state.items[n]||[]).filter(function(i)
 function sortItems(a){return a.slice().sort(function(x,y){return (x.order||0)-(y.order||0)})}
 
 /* ---------- state ---------- */
-var state={sets:{},items:{},loaded:{},P:defP(),gotSets:false,slow:false,saveErr:'',session:null,practice:null,open:{},pend:{}};
-function defP(){return {v:1,cards:{},done:{},los:{},saq:{},viva:{},daily:{},att:{},settings:{newPerDay:15}}}
-function normP(d){var p=defP();if(!d)return p;d=JSON.parse(JSON.stringify(d));['cards','done','los','saq','viva','daily','att'].forEach(function(k){if(d[k]&&typeof d[k]==='object')p[k]=d[k]});if(d.settings&&d.settings.newPerDay>=0)p.settings.newPerDay=d.settings.newPerDay;return p}
+var state={sets:{},items:{},loaded:{},P:defP(),gotSets:false,slow:false,saveErr:'',session:null,practice:null,open:{},pend:{},sync:{user:null,msg:'',busy:false,last:0,sdk:false}};
+function defP(){return {v:1,cards:{},done:{},los:{},saq:{},viva:{},daily:{},att:{},mt:{},settings:{newPerDay:15}}}
+function normP(d){var p=defP();if(!d)return p;d=JSON.parse(JSON.stringify(d));['cards','done','los','saq','viva','daily','att','mt'].forEach(function(k){if(d[k]&&typeof d[k]==='object')p[k]=d[k]});if(d.settings&&d.settings.newPerDay>=0)p.settings.newPerDay=d.settings.newPerDay;return p}
 var tmr=null,dirty=false,writing=false,wt=null,clock=null;
 
 /* ---------- persistence (on this device first, IndexedDB) ---------- */
@@ -252,8 +253,34 @@ function idbDel(store,key){return idb().then(function(d){return new Promise(func
 function lsSave(){try{localStorage.setItem('anzca_p',JSON.stringify(state.P))}catch(e){}}
 function lsLoad(){try{var r=localStorage.getItem('anzca_p');if(r)state.P=normP(JSON.parse(r))}catch(e){}}
 function saveP(){
-  dirty=true;clearTimeout(wt);wt=setTimeout(flush,400);
+  track();dirty=true;clearTimeout(wt);wt=setTimeout(flush,400);
   lsSave();
+}
+var SEC=['cards','done','los','saq','viva','daily','att'];
+function initSnap(){var sn=state._snap={},P=state.P;SEC.forEach(function(sec){var o=P[sec]||{};Object.keys(o).forEach(function(k){sn[sec+'|'+k]=JSON.stringify(o[k])})});sn['settings|newPerDay']=JSON.stringify(P.settings.newPerDay)}
+function track(){
+  var sn=state._snap||(state._snap={}),P=state.P,now=Date.now();
+  SEC.forEach(function(sec){var o=P[sec]||{},seen={};
+    Object.keys(o).forEach(function(k){seen[sec+'|'+k]=1;var j=JSON.stringify(o[k]),sk=sec+'|'+k;if(sn[sk]!==j){sn[sk]=j;P.mt[sk]=now}});
+    Object.keys(sn).forEach(function(sk){if(sk.indexOf(sec+'|')===0&&!seen[sk]){delete sn[sk];P.mt[sk]=now}})});
+  var sj=JSON.stringify(P.settings.newPerDay);if(sn['settings|newPerDay']!==sj){sn['settings|newPerDay']=sj;P.mt['settings|newPerDay']=now}
+}
+function mergeP(a,b){
+  var out=defP();
+  SEC.forEach(function(sec){
+    var A=a[sec]||{},B=b[sec]||{},ks={};
+    Object.keys(A).concat(Object.keys(B)).forEach(function(k){ks[k]=1});
+    Object.keys(a.mt||{}).concat(Object.keys(b.mt||{})).forEach(function(sk){if(sk.indexOf(sec+'|')===0)ks[sk.slice(sec.length+1)]=1});
+    Object.keys(ks).forEach(function(k){
+      var sk=sec+'|'+k,ta=(a.mt||{})[sk]||0,tb=(b.mt||{})[sk]||0,w;
+      if(ta===tb){w=A.hasOwnProperty(k)?A:B}else w=ta>tb?A:B;
+      if(w.hasOwnProperty(k))out[sec][k]=JSON.parse(JSON.stringify(w[k]));
+    });
+  });
+  var sa=(a.mt||{})['settings|newPerDay']||0,sb=(b.mt||{})['settings|newPerDay']||0;
+  out.settings.newPerDay=(sa>=sb?a:b).settings.newPerDay;
+  var mt={};[a.mt||{},b.mt||{}].forEach(function(m){Object.keys(m).forEach(function(k){mt[k]=Math.max(mt[k]||0,m[k])})});out.mt=mt;
+  return out;
 }
 function prune(){var keys=Object.keys(state.P.daily).sort();while(keys.length>120){delete state.P.daily[keys.shift()]}}
 async function flush(){
@@ -261,7 +288,76 @@ async function flush(){
   writing=true;dirty=false;prune();
   try{await idbSet('kv','P',JSON.parse(JSON.stringify(state.P)));if(state.saveErr){state.saveErr='';render()}}catch(e){state.saveErr=(e&&e.name)||'error';dirty=true;render()}
   writing=false;
+  syncSoon();
 }
+
+
+/* ---------- sync between devices (Firebase, optional) ---------- */
+var FB_CONFIG={apiKey:"AIzaSyCu2bG9wXtfKWffGxZgL94apaulKk2_roY",authDomain:"anzca-final-exam-companion.firebaseapp.com",projectId:"anzca-final-exam-companion",storageBucket:"anzca-final-exam-companion.firebasestorage.app",messagingSenderId:"170216675345",appId:"1:170216675345:web:7e4c557507ad4d4db7b9b0"};
+var FB_V='10.12.2',fbAuth=null,fbDb=null,syncT=null,unsub=null;
+function loadScript(u){return new Promise(function(res,rej){var s=document.createElement('script');s.src=u;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+async function fbLoad(){
+  if(fbAuth)return true;
+  try{
+    var b='https://www.gstatic.com/firebasejs/'+FB_V+'/firebase-';
+    await loadScript(b+'app-compat.js');await Promise.all([loadScript(b+'auth-compat.js'),loadScript(b+'firestore-compat.js')]);
+    firebase.initializeApp(FB_CONFIG);fbAuth=firebase.auth();fbDb=firebase.firestore();state.sync.sdk=true;return true;
+  }catch(e){return false}
+}
+function syncUI(){
+  var el=document.getElementById('syncbox');if(!el)return;
+  var a=document.activeElement;if(a&&el.contains(a)&&a.tagName==='INPUT')return;
+  el.innerHTML=syncHtml();
+}
+function syncHtml(){
+  var y=state.sync,h='<h2>Sync between devices</h2>';
+  if(y.user){
+    h+='<p class="mut" style="margin-top:0">Signed in as <b>'+esc(y.user.email)+'</b>. '+(y.busy?'Syncing…':y.last?'Last synced '+fmtAt(new Date(y.last).toISOString())+'.':'Waiting to sync.')+'</p>';
+    if(y.msg)h+='<p class="mut" style="margin-top:0">'+esc(y.msg)+'</p>';
+    h+='<div class="row"><button class="btn primary" data-act="syncNow">Sync now</button><button class="btn" data-act="signOut">Sign out</button></div>';
+  }else{
+    h+='<p class="mut" style="margin-top:0">Sign in with the same email and password on every device and your progress and written answers stay matched. Recordings stay on the device that made them. The app works fully offline without signing in.</p>';
+    h+='<div class="row" style="flex-wrap:wrap"><input type="email" id="syncEmail" placeholder="Email" autocomplete="username" style="min-width:220px"><input type="password" id="syncPw" placeholder="Password (6+ characters)" autocomplete="current-password" style="min-width:220px"></div>';
+    if(y.msg)h+='<p style="margin:10px 0 0;color:var(--bad)">'+esc(y.msg)+'</p>';
+    h+='<div class="row" style="margin-top:12px"><button class="btn primary" data-act="signIn">Sign in</button><button class="btn" data-act="signUp">Create account</button><button class="btn" data-act="resetPw">Forgot password</button></div>';
+  }
+  return h;
+}
+function applyMerged(m){state.P=normP(m);initSnap();lsSave();idbSet('kv','P',JSON.parse(JSON.stringify(state.P))).catch(function(){});refresh()}
+async function syncNow(){
+  var y=state.sync;if(!y.user||!fbDb||y.busy)return;
+  y.busy=true;y.msg='';syncUI();
+  try{
+    var ref=fbDb.doc('users/'+y.user.uid+'/state/main'),merged=null;
+    await fbDb.runTransaction(async function(tx){
+      var d=await tx.get(ref),remote=d.exists&&d.data().json?JSON.parse(d.data().json):null;
+      merged=remote?mergeP(normP(state.P),normP(remote)):normP(state.P);
+      tx.set(ref,{json:JSON.stringify(merged),at:Date.now()});
+    });
+    if(JSON.stringify(merged)!==JSON.stringify(state.P))applyMerged(merged);
+    y.last=Date.now();y.msg='';
+  }catch(e){y.msg=(navigator.onLine?'Could not sync: '+((e&&e.code)||'error'):'Offline. Will sync when you are back online.')}
+  y.busy=false;syncUI();
+}
+function syncSoon(){if(!state.sync.user)return;clearTimeout(syncT);syncT=setTimeout(syncNow,2000)}
+async function syncStart(){
+  if(!(await fbLoad()))return;
+  fbAuth.onAuthStateChanged(function(u){
+    state.sync.user=u?{uid:u.uid,email:u.email}:null;state.sync.msg='';
+    if(unsub){unsub();unsub=null}
+    if(u){
+      syncNow();
+      unsub=fbDb.doc('users/'+u.uid+'/state/main').onSnapshot(function(d){
+        if(!d.exists||d.metadata.hasPendingWrites||state.sync.busy)return;
+        try{var m=mergeP(normP(state.P),normP(JSON.parse(d.data().json)));if(JSON.stringify(m)!==JSON.stringify(state.P))applyMerged(m)}catch(e){}
+      },function(){});
+    }
+    syncUI();
+  });
+  window.addEventListener('online',function(){syncSoon()});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)syncSoon()});
+}
+function authErr(e){var c=(e&&e.code)||'';return /invalid-credential|wrong-password|user-not-found/.test(c)?'Email or password is not right.':c==='auth/email-already-in-use'?'That email already has an account. Use Sign in.':c==='auth/weak-password'?'Choose a password of at least 6 characters.':c==='auth/invalid-email'?'That does not look like an email address.':c==='auth/network-request-failed'?'You appear to be offline.':'Could not sign in ('+c+').'}
 
 /* ---------- audio on this device ---------- */
 var urlCache={};
@@ -291,9 +387,10 @@ async function init(){
     var saved=await idbGet('kv','P');
     if(saved)state.P=normP(saved);else lsLoad();
   }catch(e){lsLoad()}
-  render();
+  initSnap();render();
   try{await loadContent()}catch(e){state.slow=true}
   refresh();
+  syncStart();
   if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js')}catch(e){}}
 }
 
@@ -511,6 +608,7 @@ function rWeak(){
 /* data */
 function rData(){
   var h='<h1>Data</h1><p class="sub">Progress is saved on this device and works offline. Use the backup below to keep a copy or move progress to another device.</p>';
+  h+='<div class="card" id="syncbox">'+syncHtml()+'</div>';
   h+='<div class="card"><h2>Daily new questions</h2><div class="row"><input type="number" id="newPer" min="0" max="100" value="'+state.P.settings.newPerDay+'" data-bind="newPer"><span class="mut">new questions introduced per day, on top of anything due</span></div></div>';
   h+='<div class="two"><div class="card"><h2>Progress</h2><p class="mut" style="margin-top:0">Reviews, completed chapters, SAQ and viva scores.</p><div class="row"><button class="btn" data-act="backup">Back up progress</button><label class="btn" for="restoreFile">Restore</label><input type="file" id="restoreFile" accept=".json,application/json" hidden></div></div>';
   h+='<div class="card"><h2>Study content</h2><p class="mut" style="margin-top:0">Every set, chapter and question currently loaded, as one portable file.</p><div class="row"><button class="btn" data-act="exportContent">Export content</button></div></div></div>';
@@ -670,6 +768,16 @@ var A={
   vtick:function(el){state.practice.ticks[el.dataset.k]=el.checked},
   nextStage:function(){var p=state.practice,n=(p.it.stages||[]).length;if(p.stage+1<n){p.stage++;p.shown=false}else{p.finished=true;stopClock()}render();window.scrollTo(0,0)},
   saveViva:function(){var p=state.practice,tot=0,got=0;(p.it.stages||[]).forEach(function(s,a){(s.points||[]).forEach(function(_,b){tot++;if(p.ticks[a+'.'+b])got++})});state.P.viva[p.key]={score:tot?got/tot:0,at:today(),secs:Math.round(p.elapsed)};saveP();toast('Result saved')},
+  signIn:async function(){var y=state.sync,e=document.getElementById('syncEmail').value.trim(),p=document.getElementById('syncPw').value;if(!e||!p){y.msg='Enter your email and password.';syncUI();return}
+    if(!(await fbLoad())){y.msg='Sync is not available right now. Check your connection.';syncUI();return}
+    try{await fbAuth.signInWithEmailAndPassword(e,p)}catch(err){y.msg=authErr(err);syncUI()}},
+  signUp:async function(){var y=state.sync,e=document.getElementById('syncEmail').value.trim(),p=document.getElementById('syncPw').value;if(!e||!p){y.msg='Enter an email and a new password.';syncUI();return}
+    if(!(await fbLoad())){y.msg='Sync is not available right now. Check your connection.';syncUI();return}
+    try{await fbAuth.createUserWithEmailAndPassword(e,p)}catch(err){y.msg=authErr(err);syncUI()}},
+  resetPw:async function(){var y=state.sync,e=document.getElementById('syncEmail').value.trim();if(!e){y.msg='Type your email first, then tap Forgot password.';syncUI();return}
+    try{await fbAuth.sendPasswordResetEmail(e);y.msg='If that email has an account, a reset link has been sent.'}catch(err){y.msg=authErr(err)}syncUI()},
+  signOut:async function(){try{await fbAuth.signOut()}catch(e){}},
+  syncNow:function(){syncNow()},
   backup:function(){saveFile('anzca-progress-'+today()+'.json',JSON.stringify(state.P,null,1));toast('Backup saved')},
   exportContent:function(){saveFile('anzca-content-'+today()+'.json',JSON.stringify({exported:today(),sets:state.sets,items:state.items}));toast('Content exported')}
 };
