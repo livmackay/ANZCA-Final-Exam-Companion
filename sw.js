@@ -1,5 +1,5 @@
 /* Offline cache. Bump VERSION whenever app files change; content files are refreshed from the network when online. */
-const VERSION = 'v28';
+const VERSION = 'v29';
 const CORE=['./','index.html','manifest.webmanifest','icon.svg','icon-180.png','icon-192.png','icon-512.png','content-index.json','set10-progress.json','set10-fig1.png','set10-fig2.png','set10-fig3.png','set11-fig1.png','set11-fig2.png','set11-fig3.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSION).then(async c=>{await c.addAll(CORE);const idx=await (await fetch('content-index.json',{cache:'no-cache'})).json();await c.addAll(idx.sets.map(x=>x.file))}).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==VERSION).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
