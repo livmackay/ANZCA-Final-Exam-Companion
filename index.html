@@ -459,14 +459,14 @@ function setStats(n){
 }
 function curSet(){var t=today();for(var i=0;i<SYL.length;i++){if(t>=SYL[i].start&&t<=endOf(SYL[i].n))return SYL[i]}for(var j=0;j<SYL.length;j++){if(SYL[j].start>t)return SYL[j]}return SYL[SYL.length-1]}
 function streak(){var d=today(),n=0,D=state.P.daily;if(!(D[d]&&D[d].r>0))d=addD(d,-1);while(D[d]&&D[d].r>0){n++;d=addD(d,-1)}return n}
+var IVL={1:1,2:3,3:5,4:7};
 function sched(c,r){
-  var t=today(),i=c?c.i:0,e=c?c.e:2.5,n=c?c.n:0,l=c?c.l:0;
-  if(r===1){return {i:0,e:Math.max(1.3,e-.2),n:0,l:l+1,due:t,r:r,t:Date.now()}}
-  if(r===2){i=Math.max(1,Math.round((i||1)*1.2));e=Math.max(1.3,e-.15)}
-  else if(r===3){i=n===0?1:n===1?3:Math.round(i*e)}
-  else{i=n===0?3:Math.round(Math.max(i,1)*e*1.3);e=e+.15}
-  i=Math.max(1,i);
-  return {i:i,e:e,n:n+1,l:l,due:addD(t,i),r:r,t:Date.now()};
+  var t=today(),i=IVL[r],e=c?c.e:2.5,n=c?c.n:0,l=c?c.l:0;
+  if(r===1){e=Math.max(1.3,e-.2);l=l+1;n=0}
+  else if(r===2){e=Math.max(1.3,e-.15);n=n+1}
+  else if(r===3){n=n+1}
+  else{e=e+.15;n=n+1}
+  return {i:i,e:e,n:n,l:l,due:addD(t,i),r:r,t:Date.now()};
 }
 
 /* ---------- routing and rendering ---------- */
@@ -586,7 +586,7 @@ function rSet(r){
     h+='<div class="row" style="margin-bottom:14px;justify-content:space-between"><span class="mut">'+st.seen+' of '+st.cs+' questions started · '+st.due+' due</span><button class="btn primary" data-act="studySet" data-n="'+r.n+'"'+(q.length?'':' disabled')+'>Study this set'+(q.length?' ('+q.length+')':'')+'</button></div>';
     h+=list.map(function(it){
       var key=r.n+':'+it.id,c2=state.P.cards[key],chip=statusChip(c2);
-      var rates=[1,2,3,4].map(function(r2){var lab=['Again','Hard','Good','Easy'][r2-1],nx=r2===1?'today':ivl(sched(c2,r2).i);return '<button class="rate r'+r2+'" data-act="rateInline" data-key="'+key+'" data-r="'+r2+'">'+lab+'<small>'+nx+'</small></button>'}).join('');
+      var rates=[1,2,3,4].map(function(r2){var lab=['Again','Hard','Good','Easy'][r2-1],nx=ivl(sched(c2,r2).i);return '<button class="rate r'+r2+'" data-act="rateInline" data-key="'+key+'" data-r="'+r2+'">'+lab+'<small>'+nx+'</small></button>'}).join('');
       return '<details class="ch qd" data-key="'+key+'"'+(state.open[key]?' open':'')+'><summary><span>'+esc(it.title)+(it.sub?'<br><small class="mut">'+esc(it.sub)+(it.target?' · target '+it.target+' s':'')+'</small>':'')+'</span><span class="row" style="gap:6px"><span class="chip '+priCls(pri(it))+'">'+esc(pri(it))+'</span><span data-status>'+chip+'</span></span></summary><div class="inner">'+(it.type==='retrieve'?'<div class="qtext">'+esc(it.q)+'</div>':'<p class="mut" style="margin:12px 0">Say it out loud first'+(it.target?' · target '+it.target+' s':'')+'</p>')+'<div class="attin">'+attInput(key,it)+'</div><div class="row" style="margin-top:12px"><button class="btn primary" data-act="showA">Show model answer</button></div><div class="ansbox" hidden><div class="md">'+ansHtml(it)+'</div><div class="eyebrow" style="margin-top:16px">How well did you know it?</div><div class="rates">'+rates+'</div></div><div class="attlist">'+attHtml(key)+'</div></div></details>';
     }).join('');
   }else{
@@ -620,7 +620,7 @@ function rReview(){
   h+='</div>';
   if(s.revealed){
     h+='<div class="card"><div class="eyebrow" style="margin-bottom:6px">Model answer</div><div class="md">'+ansHtml(it)+'</div>'+attHtml(s.keys[s.idx])+'</div>';
-    h+='<div class="eyebrow">How well did you know it?</div><div class="rates">'+[1,2,3,4].map(function(r){var lab=['Again','Hard','Good','Easy'][r-1],nx=r===1?'today':ivl(sched(c,r).i);return '<button class="rate r'+r+'" data-act="rate" data-r="'+r+'">'+lab+'<small>'+r+' · '+nx+'</small></button>'}).join('')+'</div>';
+    h+='<div class="eyebrow">How well did you know it?</div><div class="rates">'+[1,2,3,4].map(function(r){var lab=['Again','Hard','Good','Easy'][r-1],nx=ivl(sched(c,r).i);return '<button class="rate r'+r+'" data-act="rate" data-r="'+r+'">'+lab+'<small>'+r+' · '+nx+'</small></button>'}).join('')+'</div>';
   }
   return h;
 }
@@ -711,7 +711,6 @@ function startSession(keys,scope){
 function rate(r){
   var s=state.session,key=s.keys[s.idx],P=state.P,prev=P.cards[key],t=today(),d=P.daily[t]||{r:0,n:0};
   P.cards[key]=sched(prev,r);d.r++;if(!prev)d.n++;P.daily[t]=d;s.stats[r-1]++;
-  if(r===1)s.keys.push(key);
   s.idx++;s.revealed=false;s.ans='';saveP();render();window.scrollTo(0,0);
 }
 
@@ -780,7 +779,7 @@ var A={
     det.open=false;state.open[key]=false;
     var nx=det.nextElementSibling;
     if(nx&&nx.tagName==='DETAILS'){nx.open=true;state.open[nx.dataset.key]=true;nx.scrollIntoView({block:'start',behavior:'smooth'})}
-    toast(r2===1?'Again: back in this session':'Saved')},
+    toast(r2===1?'Again: back tomorrow':'Saved')},
   losPass:function(el){var k=el.dataset.key,i=+el.dataset.i,L=state.P.los;var v=(L[k]||[0,0,0]).slice();v[i]=v[i]?0:1;if(v.some(Boolean))L[k]=v;else delete L[k];saveP();state._scroll=window.scrollY;render()},
   oneQ:function(el){startSession([el.dataset.key],+el.dataset.key.split(':')[0])},
   endSession:function(){state.session=null},
