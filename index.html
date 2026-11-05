@@ -662,7 +662,7 @@ function rPractice(){
     h+='<div class="eyebrow" style="margin-top:12px">Set '+p.n+' · SAQ · '+(it.minutes||10)+' minutes</div><h1>'+esc(it.title)+'</h1>';
     if(it.source)h+='<p class="sub">'+esc(it.source)+'</p>';
     h+='<div class="card"><div class="row" style="justify-content:space-between"><div class="timer" id="clock">'+mmss(total-p.elapsed)+'</div><div class="row">'+(p.revealed?'':(p.started&&!p.stopped?'<button class="btn" data-act="stopClock">Pause</button>':'<button class="btn primary" data-act="startClock">'+(p.elapsed?'Resume':'Start timer')+'</button>'))+'</div></div>';
-    h+='<div class="qtext">'+esc(it.q)+'</div><textarea id="ans" data-bind="ans" style="min-height:220px" placeholder="Write your answer here. Aim for the points a marker would look for.">'+esc(p.ans)+'</textarea>';
+    h+='<div class="qtext">'+esc(it.q)+'</div>'+(it.fig?'<div class="md" style="margin:12px 0">'+md(it.fig)+'</div>':'')+'<textarea id="ans" data-bind="ans" style="min-height:220px" placeholder="Write your answer here. Aim for the points a marker would look for.">'+esc(p.ans)+'</textarea>';
     if(!p.revealed)h+='<div class="row" style="margin-top:14px"><button class="btn primary" data-act="revealPractice">Finish and show model answer</button></div>';
     h+='</div>';
     if(p.revealed){
