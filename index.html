@@ -200,7 +200,7 @@ var app=document.getElementById('app');
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function inl(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')}
 function ansHtml(it){
-  var a=it.a||'',i=a.search(/^## Self-marking checklist\s*$/m);
+  var a=it.a||'',i=a.search(/^#{2,4} Self-marking checklist\s*$/m);
   if(i<0)return md(a);
   var head=a.slice(0,i),items=a.slice(i).split('\n').filter(function(l){return /^\s*[-*] /.test(l)}).map(function(l){return l.replace(/^\s*[-*] (\[ \] )?/,'')});
   if(!items.length)return md(a);
