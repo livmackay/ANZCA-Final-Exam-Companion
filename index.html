@@ -245,7 +245,7 @@ function losStats(n){var tot=0,p=[0,0,0];(state.items[n]||[]).filter(function(i)
 function sortItems(a){return a.slice().sort(function(x,y){return (x.order||0)-(y.order||0)})}
 
 /* ---------- state ---------- */
-var state={sets:{},items:{},loaded:{},P:defP(),gotSets:false,slow:false,saveErr:'',session:null,practice:null,open:{},pend:{},sync:{user:null,msg:'',busy:false,last:0,sdk:false}};
+var state={lib:null,sets:{},items:{},loaded:{},P:defP(),gotSets:false,slow:false,saveErr:'',session:null,practice:null,open:{},pend:{},sync:{user:null,msg:'',busy:false,last:0,sdk:false}};
 function defP(){return {v:1,cards:{},done:{},los:{},saq:{},viva:{},daily:{},att:{},mt:{},settings:{newPerDay:15}}}
 function normP(d){var p=defP();if(!d)return p;d=JSON.parse(JSON.stringify(d));['cards','done','los','saq','viva','daily','att','mt'].forEach(function(k){if(d[k]&&typeof d[k]==='object')p[k]=d[k]});if(d.settings&&d.settings.newPerDay>=0)p.settings.newPerDay=d.settings.newPerDay;return p}
 var tmr=null,dirty=false,writing=false,wt=null,clock=null;
@@ -393,6 +393,7 @@ async function loadContent(){
       state.items[d.num]=d.items;state.loaded[d.num]=d.updated;
     }catch(err){}
   }));
+  try{state.lib=await (await fetch('library.json',{cache:'no-cache'})).json()}catch(err){}
   state.gotSets=true;
 }
 var MIG11={'11:r4':'11:rn2','11:r6':'11:rn4','11:r8':'11:rn8','11:r9':'11:rn9','11:r10':'11:rn10','11:r11':'11:rn11','11:r12':'11:rn12','11:r14':'11:rn14','11:r15':'11:rn6','11:r17':'11:rn17','11:r22':'11:rn20','11:r23':'11:rn22'};
@@ -473,14 +474,32 @@ function sched(c,r){
 function route(){
   var h=location.hash.replace(/^#/,'')||'dashboard',m=h.match(/^set-(\d+)(?:-(learn|speak|retrieve|saq|viva|los|docs|trials|refs))?$/);
   if(m&&+m[1]>=1&&+m[1]<=36)return {name:'set',n:+m[1],tab:m[2]||null};
+  var lm=h.match(/^library(?:-(neuro|resp|cvs|gi|renal))?$/);if(lm)return {name:'library',tab:lm[1]||null};
   return {name:['dashboard','review','weak','data'].indexOf(h)>-1?h:'dashboard'};
 }
 function renderNav(r){
   var due=allCards(null).filter(function(c){return isDue(c.key)}).length;
-  var items=[['dashboard','Dashboard'],['review','Review'],['weak','Weak spots'],['data','Data']];
+  var items=[['dashboard','Dashboard'],['review','Review'],['library','Library'],['weak','Weak spots'],['data','Data']];
   document.getElementById('nav').innerHTML=items.map(function(x){
     var on=r.name===x[0]||(x[0]==='dashboard'&&r.name==='set');
     return '<a href="#'+x[0]+'" class="'+(on?'on':'')+'">'+x[1]+(x[0]==='review'&&due?'<span class="badge">'+due+'</span>':'')+'</a>'}).join('');
+}
+function rLibrary(r){
+  var L=state.lib,h='<div class="eyebrow">Background knowledge</div><h1>Library</h1><p class="sub">Reference guides that apply across several weeks. They sit outside the weekly plan.</p>';
+  if(!L)return h+'<div class="empty">'+(state.gotSets?'The library could not be loaded. Check your connection and reopen the app.':'Loading the library…')+'</div>';
+  var tabs=L.tabs,tab=r.tab||(tabs.filter(function(t){return t.items.length})[0]||tabs[0]).id,cur=tabs.filter(function(t){return t.id===tab})[0]||tabs[0];
+  h+='<div class="tabs">'+tabs.map(function(t){return '<a href="#library-'+t.id+'" class="'+(t.id===cur.id?'on':'')+'">'+esc(t.title)+(t.items.length?'<small>'+t.items.length+'</small>':'')+'</a>'}).join('')+'</div>';
+  if(!cur.items.length)return h+'<div class="empty">Nothing in this section yet.</div>';
+  cur.items.forEach(function(g){
+    var ch=g.chapters||[],n=ch.filter(function(c){return state.P.done['lib:'+c.id]}).length;
+    h+='<h2 style="margin:6px 0 4px">'+esc(g.title)+'</h2>'+(g.intro?'<p class="sub" style="margin-top:0">'+esc(g.intro)+'</p>':'');
+    h+='<div class="prog" style="height:8px;margin:10px 0 6px"><i style="width:'+Math.round(n/Math.max(1,ch.length)*100)+'%"></i></div><div class="mut" style="font-size:13px;margin-bottom:14px">'+n+' of '+ch.length+' sections complete</div>';
+    h+=ch.map(function(it){
+      var key='lib:'+it.id,done=state.P.done[key],open=state.open[key];
+      return '<details class="ch" data-key="'+key+'"'+(open?' open':'')+'><summary><span>'+esc(it.title)+'</span><span class="row" style="gap:6px">'+(done?'<span class="chip good" data-doneflag>Done</span>':'<span data-doneflag></span>')+'</span></summary><div class="inner"><div class="md">'+md(it.body)+'</div><div class="row" style="margin-top:18px"><button class="btn'+(done?'':' primary')+'" data-act="done" data-key="'+key+'">'+(done?'Marked complete ✓':'Mark chapter complete')+'</button></div></div></details>';
+    }).join('');
+  });
+  return h;
 }
 function render(){
   stopClock();
@@ -490,6 +509,7 @@ function render(){
   if(state.practice)html+=rPractice();
   else if(r.name==='dashboard')html+=rDash();
   else if(r.name==='set')html+=rSet(r);
+  else if(r.name==='library')html+=rLibrary(r);
   else if(r.name==='review')html+=rReview();
   else if(r.name==='weak')html+=rWeak();
   else html+=rData();
