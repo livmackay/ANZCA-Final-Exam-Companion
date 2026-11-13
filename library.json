@@ -123,6 +123,44 @@
    "id": "renal",
    "title": "Renal",
    "items": []
+  },
+  {
+   "id": "vivas",
+   "title": "Model vivas",
+   "items": [
+    {
+     "id": "vivas-abcs",
+     "title": "General Final viva recordings",
+     "intro": "Full viva demonstrations that cover several topics and do not belong to one learning set.",
+     "groups": [
+      {
+       "source": "ABCs of Anaesthesia",
+       "items": [
+        {
+         "id": "5f2c06",
+         "title": "Intraoperative Crisis Management Viva",
+         "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+        },
+        {
+         "id": "a51c60",
+         "title": "2024 Final Exam Viva 1 Demo with Dr Vida",
+         "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+        },
+        {
+         "id": "3f1d5b",
+         "title": "2024 Final Exam Viva 2 Demo with Dr Vida",
+         "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+        },
+        {
+         "id": "669c84",
+         "title": "2024 Medical Viva Demo with Dr Vida - Ex Chair of Exams",
+         "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+        }
+       ]
+      }
+     ]
+    }
+   ]
   }
  ]
 }

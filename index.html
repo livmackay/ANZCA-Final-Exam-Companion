@@ -245,7 +245,7 @@ function losStats(n){var tot=0,p=[0,0,0];(state.items[n]||[]).filter(function(i)
 function sortItems(a){return a.slice().sort(function(x,y){return (x.order||0)-(y.order||0)})}
 
 /* ---------- state ---------- */
-var state={lib:null,sets:{},items:{},loaded:{},P:defP(),gotSets:false,slow:false,saveErr:'',session:null,practice:null,open:{},pend:{},sync:{user:null,msg:'',busy:false,last:0,sdk:false}};
+var state={pod:null,lib:null,sets:{},items:{},loaded:{},P:defP(),gotSets:false,slow:false,saveErr:'',session:null,practice:null,open:{},pend:{},sync:{user:null,msg:'',busy:false,last:0,sdk:false}};
 function defP(){return {v:1,cards:{},done:{},los:{},saq:{},viva:{},daily:{},att:{},mt:{},settings:{newPerDay:15}}}
 function normP(d){var p=defP();if(!d)return p;d=JSON.parse(JSON.stringify(d));['cards','done','los','saq','viva','daily','att','mt'].forEach(function(k){if(d[k]&&typeof d[k]==='object')p[k]=d[k]});if(d.settings&&d.settings.newPerDay>=0)p.settings.newPerDay=d.settings.newPerDay;return p}
 var tmr=null,dirty=false,writing=false,wt=null,clock=null;
@@ -393,6 +393,7 @@ async function loadContent(){
       state.items[d.num]=d.items;state.loaded[d.num]=d.updated;
     }catch(err){}
   }));
+  try{state.pod=await (await fetch('podcasts.json',{cache:'no-cache'})).json()}catch(err){}
   try{state.lib=await (await fetch('library.json',{cache:'no-cache'})).json()}catch(err){}
   state.gotSets=true;
 }
@@ -472,9 +473,9 @@ function sched(c,r){
 
 /* ---------- routing and rendering ---------- */
 function route(){
-  var h=location.hash.replace(/^#/,'')||'dashboard',m=h.match(/^set-(\d+)(?:-(learn|speak|retrieve|saq|viva|los|docs|trials|refs))?$/);
+  var h=location.hash.replace(/^#/,'')||'dashboard',m=h.match(/^set-(\d+)(?:-(learn|speak|retrieve|saq|viva|los|docs|podcasts|trials|refs))?$/);
   if(m&&+m[1]>=1&&+m[1]<=36)return {name:'set',n:+m[1],tab:m[2]||null};
-  var lm=h.match(/^library(?:-(neuro|resp|cvs|gi|renal))?$/);if(lm)return {name:'library',tab:lm[1]||null};
+  var lm=h.match(/^library(?:-(neuro|resp|cvs|gi|renal|vivas))?$/);if(lm)return {name:'library',tab:lm[1]||null};
   return {name:['dashboard','review','weak','data'].indexOf(h)>-1?h:'dashboard'};
 }
 function renderNav(r){
@@ -484,6 +485,24 @@ function renderNav(r){
     var on=r.name===x[0]||(x[0]==='dashboard'&&r.name==='set');
     return '<a href="#'+x[0]+'" class="'+(on?'on':'')+'">'+x[1]+(x[0]==='review'&&due?'<span class="badge">'+due+'</span>':'')+'</a>'}).join('');
 }
+function podGroups(n){return state.pod&&state.pod.sets&&state.pod.sets[n]||[]}
+function podCount(n){return podGroups(n).reduce(function(a,g){return a+g.items.length},0)}
+function podList(prefix,groups){
+  var tot=0,got=0;groups.forEach(function(g){g.items.forEach(function(x){tot++;if(state.P.done[prefix+':'+x.id])got++})});
+  var h='<div class="prog" style="height:8px;margin:10px 0 6px"><i style="width:'+Math.round(got/Math.max(1,tot)*100)+'%"></i></div><div class="mut" style="font-size:13px;margin-bottom:14px" data-podn>'+got+' of '+tot+' listened to</div>';
+  groups.forEach(function(g){
+    h+='<h2 style="margin:18px 0 4px">'+esc(g.source)+'</h2><div class="card" style="padding:4px 16px">'+g.items.map(function(x){
+      var key=prefix+':'+x.id;
+      return '<label class="check"><input type="checkbox" data-act="podTick" data-key="'+esc(key)+'"'+(state.P.done[key]?' checked':'')+'><span><a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+esc(x.title)+'</a></span></label>'}).join('')+'</div>';
+  });
+  return h;
+}
+function podHtml(n){
+  var g=podGroups(n);
+  if(!state.pod)return '<div class="empty">'+(state.gotSets?'The podcast list could not be loaded. Check your connection and reopen the app.':'Loading podcasts…')+'</div>';
+  if(!g.length)return '<div class="empty">No podcasts are matched to this set.</div>';
+  return '<p class="mut" style="font-size:13px">Links open the podcast\u2019s catalogue page. Search for the episode title there. Tick each one when you have listened to it.</p>'+podList('pod:'+n,g);
+}
 function rLibrary(r){
   var L=state.lib,h='<div class="eyebrow">Background knowledge</div><h1>Library</h1><p class="sub">Reference guides that apply across several weeks. They sit outside the weekly plan.</p>';
   if(!L)return h+'<div class="empty">'+(state.gotSets?'The library could not be loaded. Check your connection and reopen the app.':'Loading the library…')+'</div>';
@@ -491,6 +510,7 @@ function rLibrary(r){
   h+='<div class="tabs">'+tabs.map(function(t){return '<a href="#library-'+t.id+'" class="'+(t.id===cur.id?'on':'')+'">'+esc(t.title)+(t.items.length?'<small>'+t.items.length+'</small>':'')+'</a>'}).join('')+'</div>';
   if(!cur.items.length)return h+'<div class="empty">Nothing in this section yet.</div>';
   cur.items.forEach(function(g){
+    if(g.groups){h+='<h2 style="margin:6px 0 4px">'+esc(g.title)+'</h2>'+(g.intro?'<p class="sub" style="margin-top:0">'+esc(g.intro)+'</p>':'')+podList('lib:'+g.id,g.groups);return}
     var ch=g.chapters||[],n=ch.filter(function(c){return state.P.done['lib:'+c.id]}).length;
     h+='<h2 style="margin:6px 0 4px">'+esc(g.title)+'</h2>'+(g.intro?'<p class="sub" style="margin-top:0">'+esc(g.intro)+'</p>':'');
     h+='<div class="prog" style="height:8px;margin:10px 0 6px"><i style="width:'+Math.round(n/Math.max(1,ch.length)*100)+'%"></i></div><div class="mut" style="font-size:13px;margin-bottom:14px">'+n+' of '+ch.length+' sections complete</div>';
@@ -568,8 +588,9 @@ function rSet(r){
   var ls=losStats(r.n);
   h+='<div class="prog" style="height:8px;margin:10px 0 6px"><i style="width:'+st.pct+'%"></i></div><div class="mut" style="font-size:13px;margin-bottom:14px">'+st.pct+'% of chapters and questions attempted ('+(st.done+st.seen)+' of '+st.tot+')</div>';
   if(ls.tot)h+='<div class="kpis" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:6px">'+['First','Second','Third'].map(function(nm,i){return '<div class="kpi"><span>'+nm+' pass</span><b style="font-size:22px">'+ls.p[i]+'/'+ls.tot+'</b><div class="bar" style="margin-top:8px"><i style="width:'+Math.round(ls.p[i]/ls.tot*100)+'%"></i></div></div>'}).join('')+'</div>';
-  var tabs=[['learn','Learn',c.learn||0],['speak','Speak',c.speak||0],['retrieve','Retrieve',c.retrieve||0],['saq','SAQ',c.saq||0],['viva','Viva',c.viva||0],['los','Learning Outcomes',c.los||0],['docs','Professional Documents',c.docs||0],['trials','Landmark Trials',0],['refs','References',0]];
+  var tabs=[['learn','Learn',c.learn||0],['speak','Speak',c.speak||0],['retrieve','Retrieve',c.retrieve||0],['saq','SAQ',c.saq||0],['viva','Viva',c.viva||0],['los','Learning Outcomes',c.los||0],['docs','Professional Documents',c.docs||0],['podcasts','Podcasts',podCount(r.n)],['trials','Landmark Trials',0],['refs','References',0]];
   h+='<div class="tabs">'+tabs.map(function(x){return '<a href="#set-'+r.n+'-'+x[0]+'" class="'+(tab===x[0]?'on':'')+'">'+x[1]+(x[2]?'<small>'+x[2]+'</small>':'')+'</a>'}).join('')+'</div>';
+  if(tab==='podcasts')return h+podHtml(r.n);
   var list=sortItems(its.filter(function(i){return i.type===tab}));
   if(!cnt(c)){
     return h+'<div class="empty"><b>No study content for this set yet.</b><br>Ask Claude to write Set '+r.n+' and it will appear here.</div>';
@@ -820,6 +841,7 @@ var A={
   startClock:function(){var p=state.practice;p.started=true;p.stopped=false;state._scroll=window.scrollY;render()},
   stopClock:function(){var p=state.practice;stopClock();p.stopped=true;p.started=false;state._scroll=window.scrollY;render()},
   revealPractice:function(){var p=state.practice;stopClock();p.revealed=true;p.stopped=true;p.checks=[];state._scroll=window.scrollY;render()},
+  podTick:function(el){var k=el.dataset.key,P=state.P;if(el.checked)P.done[k]=today();else delete P.done[k];saveP();var w=el.closest('.card'),root=w&&w.parentNode,all=root.querySelectorAll('input[data-act=podTick]'),n=0;all.forEach(function(x){if(x.checked)n++});var c=root.querySelector('[data-podn]');if(c)c.textContent=n+' of '+all.length+' listened to';var bar=root.querySelector('.prog i');if(bar)bar.style.width=Math.round(n/Math.max(1,all.length)*100)+'%'},
   selfTick:function(el){var w=el.closest('.selfchk'),all=w.querySelectorAll('input[type=checkbox]'),n=0;all.forEach(function(x){if(x.checked)n++});w.querySelector('.selfn b').textContent=n+' of '+all.length},
   tick:function(el){var p=state.practice;p.checks[+el.dataset.i]=el.checked;var n=(p.it.rubric||[]).length;document.getElementById('score').textContent=p.checks.filter(Boolean).length+' of '+n},
   saveScore:function(){var p=state.practice,n=(p.it.rubric||[]).length||1;state.P.saq[p.key]={score:p.checks.filter(Boolean).length/n,at:today(),secs:Math.round(p.elapsed)};saveP();toast('Score saved')},

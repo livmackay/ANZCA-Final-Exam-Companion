@@ -1,0 +1,1632 @@
+{
+ "updated": "2026-11-13",
+ "sets": {
+  "1": [
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "88fce6",
+      "title": "S1 Ep. 10: Wannabe startin' somethin' (Critical case induction)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "4f469e",
+      "title": "S9 Ep. 1: Gimme gimme shock treatment, part 1 (Inotropes and vasopressors)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "c17e34",
+      "title": "S9 Ep. 2: Gimme gimme shock treatment, part 2 (Inotropes and vasopressors)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "73a7d5",
+      "title": "S9 Ep. 3: Gimme gimme shock treatment, part 3 (Inotropes and vasopressors)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   }
+  ],
+  "2": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "265da2",
+      "title": "Abnormalities of coagulation and haemostasis",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "7f25ad",
+      "title": "Anaemia and abnormal haemoglobins",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "fb0e6d",
+      "title": "Anticoagulant agents",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "058ee8",
+      "title": "Antiplatelet agents and antifibrinolytic agents",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "8bcf54",
+      "title": "Blood groups",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "464c73",
+      "title": "S1 Ep. 11: The metal (PREVENTT trial and anaemia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "79fd30",
+      "title": "S4 Ep. 3: Bad blood, part 1 (ROTEM)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "45dcff",
+      "title": "S4 Ep. 4: Bad blood, part 2 (ROTEM)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "49620d",
+      "title": "S5 Ep. 1: Keep bleeding (DOACs)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "c4a2fb",
+      "title": "Splenectomy with Immune Thrombocytopenia Purpura | Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "3": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "25e9b4",
+      "title": "ARDS and ventilation difficulties",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "403c71",
+      "title": "COPD and asthma",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "b7bf8c",
+      "title": "Pneumonia",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "cd2c10",
+      "title": "Pneumothorax",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "52e8a0",
+      "title": "Oxygen toxicity",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   }
+  ],
+  "4": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "ac1618",
+      "title": "Management of severe sepsis",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "382790",
+      "title": "S2 Ep. 11: Bad medicine (Anaphylaxis)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "761a6d",
+      "title": "S4 Ep. 9: I've got you under my skin (Allergy testing)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "13310f",
+      "title": "S5 Ep. 6: Fever (Surviving Sepsis Guidelines 2021)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   }
+  ],
+  "5": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "298359",
+      "title": "Calcium and magnesium homeostatis",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "967338",
+      "title": "Hypokalaemia and hyperkalaemia",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "9031ac",
+      "title": "Hyponatraemia and hypernatraemia",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "748121",
+      "title": "Renal failure",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "73c0b2",
+      "title": "Renal replacement therapy",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "107f3d",
+      "title": "S6 Ep. 5: Saltwater, part 1 (Hyponatremia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "4258a5",
+      "title": "S6 Ep. 6: Saltwater, part 2 (Hyponatremia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "7b1f23",
+      "title": "S8 Ep. 3: Have another drink, part 1 (Perioperative hypotension and AKI)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "954663",
+      "title": "S8 Ep. 4: Have another drink, part 2 (Perioperative hypotension and AKI)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   }
+  ],
+  "6": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "cece2a",
+      "title": "Epilepsy",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "57b14f",
+      "title": "Head injuries and control of ICP",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "0241f9",
+      "title": "Late management of spinal cord injury",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "c579c1",
+      "title": "Management of acute spinal cord injury",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "e515a6",
+      "title": "Subarachnnoid haemorrhage",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "b1b0f4",
+      "title": "Myasthenia and muscle diseases",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "5ee473",
+      "title": "Cerebral palsy CT guided biopsy | Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "16dd4d",
+      "title": "Myasthenia Gravis Anaesthesia Final Exam Case",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "79ddd8",
+      "title": "Duchenne's Muscular Dystrophy - Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "ead70a",
+      "title": "Part 2 Final Exam Viva Demonstration - The stroke patient with Rao",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "4432f1",
+      "title": "Part 2 Final Exam Viva Demonstration - Parkinson's Disease and Fractured NOF with Faith",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "7": [
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "081474",
+      "title": "S1 Ep. 6: Achy breaky... ribs? part 1 (Regional anaesthesia for rib fracture)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "efcc3d",
+      "title": "S1 Ep. 7: Achy breaky... ribs? part 2 (Regional anaesthesia for rib fracture)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "87afed",
+      "title": "Pelvic Fracture with Severe Pain | Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "19850b",
+      "title": "Cyclist trauma | Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "8": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "09df5c",
+      "title": "Burns and drowning",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "26dc02",
+      "title": "Hormonal and metabolic response to trauma",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "ed0a0a",
+      "title": "Hyperthermia",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "fc041c",
+      "title": "Hypothermia",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   }
+  ],
+  "9": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "cfcb3e",
+      "title": "Acute poisoning",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "6b86db",
+      "title": "Management of multi organ failure",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "d22cf0",
+      "title": "Brainstem death",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   }
+  ],
+  "10": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "58b2ee",
+      "title": "Anatomy of central venous access",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   }
+  ],
+  "11": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "9ac0f6",
+      "title": "Anaesthesia of cardiac patient for non-cardiac surgery",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "d9d162",
+      "title": "Cardiomyopathy",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "9bc43e",
+      "title": "Ischaemic heart disease and congestive cardiac failure",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "8c9e09",
+      "title": "Post-operative management of MI",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "1c4d77",
+      "title": "Valvular defects",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "e75ed9",
+      "title": "S6 Ep. 15: Heart of glass, part 1 (Uncommon cardiac conditions for non-cardiac surgery)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "618049",
+      "title": "S8 Ep. 6: Heart of glass, part 2 (Uncommon cardiac conditions for non-cardiac surgery)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   }
+  ],
+  "12": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "8eb620",
+      "title": "Arrhythmias",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "05763b",
+      "title": "Pacemakers",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "518456",
+      "title": "S5 Ep. 4: Shock to the system, part 1 (Cardiac implantable devices)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "7625c2",
+      "title": "S5 Ep. 5: Shock to the system, part 2 (Cardiac implantable devices)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   }
+  ],
+  "13": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "9ede96",
+      "title": "Anaesthesia for cardiac surgery",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "7fdaaf",
+      "title": "Postoperative management of cardiac surgery patients",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "9513b0",
+      "title": "Congenital heart disease",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "4185cf",
+      "title": "S1 Ep. 14: Total eclipse of the heart, part 1 (Cardiopulmonary bypass)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "c63fad",
+      "title": "S1 Ep. 15: Total eclipse of the heart, part 2 (Cardiopulmonary bypass)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "c1d178",
+      "title": "S3 Ep. 1: 99 Luftballons, part 1 (Intra-aortic balloon pumps)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "9eb3a7",
+      "title": "S3 Ep. 2: 99 Luftballons, part 2 (Intra-aortic balloon pumps)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "22d91b",
+      "title": "S8 Ep. 8: The long and winding road, part 1 (Anaesthesia for post-heart-transplant patients)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "e91c21",
+      "title": "S8 Ep. 9: The long and winding road, part 2 (Anaesthesia for post-heart-transplant patients)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "52548b",
+      "title": "The Essentials of Cardiac Bypass with Dr Grant",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "14": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "40f851",
+      "title": "Abdominal aortic aneurysm",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "d559bb",
+      "title": "Carotid endartarectomy",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "13b864",
+      "title": "S9 Ep. 5: Bloodstream, part 1 (Anaesthesia for ruptured AAA repair)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "5fcecd",
+      "title": "S9 Ep. 6: Bloodstream, part 2 (Anaesthesia for ruptured AAA repair)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "bada55",
+      "title": "Elective AAA repair in a Jehovah's Witness",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "03e828",
+      "title": "Abdominal aortic aneurysm in a Jehovah's Witness Patient | Worst Case Exam Scenarios",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "15": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "4f8437",
+      "title": "Assessment of acute and chronic Pain",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   }
+  ],
+  "16": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "04c7a3",
+      "title": "Back pain",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "5afebc",
+      "title": "Neuropathic pain",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "4140ef",
+      "title": "Stellate ganglion and celiac plexus blocks",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "ed5777",
+      "title": "S2 Ep. 7: Sweet leaf (Cannabis and anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "42c19b",
+      "title": "S3 Ep. 10: Do you really want to hurt me? (Chronic post surgical pain)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "ac17a0",
+      "title": "S6 Ep. 8: Hurt (CRPS)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   }
+  ],
+  "17": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "dd390b",
+      "title": "Feeding",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "39d31c",
+      "title": "Nutrition requirements and malnutrition",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "b09e49",
+      "title": "Oesophageal reflux",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "d9e5cc",
+      "title": "Pancreatitis",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "dc1e74",
+      "title": "Hepatic failure",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "72ff48",
+      "title": "Jaundice",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "2c23c3",
+      "title": "S3 Ep. 7: The heat is on (HIPEC)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "2ef746",
+      "title": "Sick strangulated hernia | Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "be071d",
+      "title": "Liver Resection for Colon Cancer Mets | Worst Case Scenarios",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "18": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "62e3b6",
+      "title": "Endocrine disease",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "7f7d40",
+      "title": "Phaeochromocytoma",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "52d261",
+      "title": "Diabetes",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "1418fa",
+      "title": "Thyroid disease and thyroid surgery",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "d4ad52",
+      "title": "S1 Ep. 3: Sugar, how you get so high? (SGLT2 receptor antagonists)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "220300",
+      "title": "S2 Ep. 10: Sweet dreams are made of this (IDDM)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "5d4e65",
+      "title": "S3 Ep. 6: The pills won't help you now (Perioperative glucocorticoid management)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "ca689a",
+      "title": "S8 Ep. 10: True trans soul rebel (Anaesthesia for transgender and gender diverse adults)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "8eded8",
+      "title": "Anaesthesia for Transgender Surgery Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "dd7856",
+      "title": "Part 2 Final Exam Viva Demonstration - The Diabetic Patient for Anaesthesia with Faith",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "7ed55c",
+      "title": "Part 2 Final Exam Viva Demonstration - The Thyroid and Anaesthesia with James",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "19": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "a72fc8",
+      "title": "Physiological and anatomical changes of pregnancy",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "1b23a4",
+      "title": "S2 Ep. 6: Sweet child o' mine (Labour epidurals and autism)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "8490d9",
+      "title": "S3 Ep. 4: Don't worry baby (Anaesthesia and breastfeeding)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "0d1965",
+      "title": "S6 Ep. 11: You got a nerve, part 1 (Post obstetric nerve injury)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "6216ad",
+      "title": "S6 Ep. 12: You got a nerve, part 2 (Post obstetric nerve injury)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "8682d4",
+      "title": "Part 2 Final Exam Viva Demonstration - Obstetric Anaesthesia with Nick",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "20": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "6e59b5",
+      "title": "Anaesthesia in early pregnancy",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "b20015",
+      "title": "Medical diseases complicating pregnancy 1",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "386999",
+      "title": "Medical diseases complicating pregnancy 2",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "8ef554",
+      "title": "Pre-eclampsia",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "9e54aa",
+      "title": "S2 Ep. 1: Under pressure (Pre-eclampsia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "d3c20b",
+      "title": "S4 Ep. 1: Bleeding love (Postpartum haemorrhage)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "199296",
+      "title": "S6 Ep. 13: Mama's broken heart, part 1 (Obstetric cardiac disease)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "d59ab7",
+      "title": "S6 Ep. 14: Mama's broken heart, part 2 (Obstetric cardiac disease)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "c038ba",
+      "title": "Pregnant Mitral Stenosis | Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "21": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "7f7d3c",
+      "title": "Anatomy of the trachea and bronchi",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "fad1c6",
+      "title": "S1 Ep. 12: Catch my disease, part 1 (Covid-19 airway management)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "1f47d1",
+      "title": "S1 Ep. 13: Catch my disease, part 2 (Covid-19 airway management)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "ffc62d",
+      "title": "An Advanced Approach to Airway Assessment with Dr Rani",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "8929d2",
+      "title": "The Rapid Sequence Induction",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "22": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "7e38bb",
+      "title": "Difficult intubation",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "ac24e1",
+      "title": "Performing a tracheostomy",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "27237f",
+      "title": "S4 Ep. 11: Why (Oesophageal intubation)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "abc6e3",
+      "title": "S5: How do I breathe, part 1 (Complex airway anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "b6cc82",
+      "title": "S5: How do I breathe, part 2 (Complex airway anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "8aa86f",
+      "title": "S5: How do I breathe, part 3 (Complex airway anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "4dbc13",
+      "title": "S5: How do I breathe, part 4 (Complex airway management)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "7e937c",
+      "title": "PerOral Endoscopic Myotomy Failed intubation | Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "2811d3",
+      "title": "CICO! Performing an emergency surgical airway",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "23": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "8b3523",
+      "title": "Nausea and vomiting",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "8b6654",
+      "title": "Depth of anaesthesia monitoring",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "5abe52",
+      "title": "S1 Ep. 8: Don't wake me up (Awareness)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "9b9d86",
+      "title": "S2 Ep. 9: Strong enough (Neuromuscular monitoring)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "c150d4",
+      "title": "S2 Ep. 14: Dazed and confused (Postoperative delirium)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "175168",
+      "title": "S3 Ep. 3: You make me sick (PONV)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "62de1d",
+      "title": "S3 Ep. 11: It's not over ('til it's over), part 1 (Common PACU problems)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "272e29",
+      "title": "S3 Ep. 12: It's not over ('til it's over), part 2 (Common PACU problems)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "5be86d",
+      "title": "S4 Ep. 8: And the healing has begun (Dexamethasone and the PADDI trial)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "26b0ac",
+      "title": "S4 Ep. 10: The show must go on (Perioperative neurocognitive disorders)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   }
+  ],
+  "24": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "faf98e",
+      "title": "Anatomy of extradural space",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "e7ea52",
+      "title": "LA toxicity",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   }
+  ],
+  "25": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "49104f",
+      "title": "Ankle and knee blocks",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "c4f38c",
+      "title": "ANS anatomy",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "cc2b50",
+      "title": "Brachial plexus, interscalene and axillary blocks",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "06b811",
+      "title": "Lumbar plexus, femoral and sciatic nerve blocks",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "1f644e",
+      "title": "Ulnar median and radial nerve blocks",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "af8fd6",
+      "title": "S4 Ep. 6: Drop dead legs, part 1 (Lower limb regional anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "f6afc3",
+      "title": "S4 Ep. 7: Drop dead legs, part 2 (Lower limb regional anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "bafe5a",
+      "title": "S5 Ep. 12: These arms of mine, part 1 (Upper limb regional anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "94e147",
+      "title": "S5 Ep. 13: These arms of mine, part 2 (Upper limb regional anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "2dc376",
+      "title": "Regional anaesthesia with Dr Ki-Jinn Chin",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "26": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "fecf8c",
+      "title": "Anaesthesia for bronchoscopy",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "6436ac",
+      "title": "Lung cancer and pulmonary fibrosis",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "6731b2",
+      "title": "One lung ventilation",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "0660a8",
+      "title": "S5 Ep. 10: Take my breath away, part 1 (One-lung ventilation)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "6162a6",
+      "title": "S5 Ep. 11: Take my breath away, part 2 (One-lung ventilation)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "908697",
+      "title": "Part 2 Final Exam Viva Demonstration - The Anterior Mediastinal Mass with James",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "1022ed",
+      "title": "Part 2 Final Exam Viva Demonstration - Thoracic anaesthesia with Shehan",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "27": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "0ded16",
+      "title": "Anaesthesia for an MRI scan",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "bee5c7",
+      "title": "Principles for craniotomy",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "48b52c",
+      "title": "S1 Ep. 9: If I only had a (perfused) brain! (Clot retrieval)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "b07e14",
+      "title": "S2 Ep. 12: In My Head (DBS anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "cbd982",
+      "title": "S8 Ep. 5: Always on my mind (Neuroanaesthetic emergencies)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "26f786",
+      "title": "Cerebral aneurysm rupture | Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "28": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "78e0e6",
+      "title": "Development in infancy and childhood",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "34979d",
+      "title": "Principles of neonatal physiology",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   }
+  ],
+  "29": [
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "87bc3c",
+      "title": "S3 Ep. 8: Kids, part 1 (Paediatric anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "442503",
+      "title": "S3 Ep. 9: Kids, part 2 (Paediatric anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "c3414d",
+      "title": "Duchenne's Muscular Dystrophy Paediatric Case | Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "6bad75",
+      "title": "Part 2 Final Exam Viva Demonstration - Paediatric anaesthesia with Jo",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "30": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "f5fdb6",
+      "title": "Caudal block",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   }
+  ],
+  "31": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "19db8c",
+      "title": "Intussuception",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "01b391",
+      "title": "Neonatal resuscitation and effects of prematurity",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "69ab59",
+      "title": "Oesophageal atresia, diaphragmatic hernia and exomphalos",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "f71127",
+      "title": "Pyloric stenosis",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   }
+  ],
+  "32": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "548fb4",
+      "title": "Bleeding tonsil and foreign body",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "68d450",
+      "title": "Upper airway infections",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "a364f4",
+      "title": "ECT and anti-psychotics",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "4a857a",
+      "title": "Cranial nerves",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "c31280",
+      "title": "S4 Ep. 5: Where's your head at (Head and neck free-flap anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "0ecd52",
+      "title": "S5 Ep. 7: Protect ya neck (Neck haematoma after thyroid surgery)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "d96162",
+      "title": "FESS and hypotension - Final Exam Vivas",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "fc35f3",
+      "title": "Part 2 Final Exam Viva Demonstration - Airway surgery with Rachel",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "33": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "bdf5b4",
+      "title": "Embolic disease",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "0459e7",
+      "title": "Procedures under tourniquet",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "a24b15",
+      "title": "Rheumatoid arthritis",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "422d88",
+      "title": "S2 Ep. 13: Hips Don't Lie (Fractured NOF anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "5c4f33",
+      "title": "Scoliosis, Consent and Hypotension | Anaesthesia Final Exam Viva",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "fa24c1",
+      "title": "Part 2 Final Exam Viva Demonstration - The fractured femur/NOF patient with Dhir",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "34": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "01da3e",
+      "title": "Hypertension",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "c14539",
+      "title": "Preoperative assessment of patients with cardiac disease",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "8c997f",
+      "title": "Day case selection criteria",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "641583",
+      "title": "High risk surgical patient",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "9f8251",
+      "title": "Obesity",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "a31f28",
+      "title": "Obstructive sleep apnoea",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "34290c",
+      "title": "S2 Ep. 8: Daysleeper (OSA)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "ebb51c",
+      "title": "S3 Ep. 13: Here for you, part 1 (Anaesthesia and obesity)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "9fe326",
+      "title": "S3 Ep. 14: Here for you, part 2 (Anaesthesia and obesity)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "ba26fb",
+      "title": "S8 Ep. 1: These boots are made for walkin', part 1 (Preoperative functional capacity assessment)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "6ee4ab",
+      "title": "S8 Ep. 2: These boots are made for walkin', part 2 (Preoperative functional capacity assessment)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "0e217f",
+      "title": "S8 Ep. 7: Hungry like the wolf (Perioperative fasting and GLP-1 receptor agonists)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "6ea8eb",
+      "title": "S9 Ep. 4: Hungry Like the Wolf — update (GLP-1 receptor agonist guidelines)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "a4d2a2",
+      "title": "Part 2 Final Exam Viva Demonstration - The obese patient with Stephany",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "35": [
+   {
+    "source": "Dr Podcast",
+    "items": [
+     {
+      "id": "5a0bf4",
+      "title": "Cataract and detached retina",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "62facf",
+      "title": "Control of intraocular pressure",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "44f513",
+      "title": "Orbital anatomy",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "8318c9",
+      "title": "Penetrating eye injury",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     },
+     {
+      "id": "8041da",
+      "title": "Strabismum",
+      "url": "https://drpodcast.co.uk/products/copy-of-complete-final-frca-bundle-103-podcasts"
+     }
+    ]
+   },
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "63ab88",
+      "title": "S2 Ep. 4: We didn't start the fire, part 1 (Burns anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "5e6028",
+      "title": "S2 Ep. 5: We didn't start the fire, part 2 (Burns anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "78f2ac",
+      "title": "S6 Ep. 9: Eye of the tiger, part 1 (Eye surgery anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "940f46",
+      "title": "S6 Ep. 10: Eye of the tiger, part 2 (Eye surgery anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "fcb870",
+      "title": "Ophthalmic Anaesthesia Insights with an Ophthalmologist",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ],
+  "36": [
+   {
+    "source": "Deep Breaths",
+    "items": [
+     {
+      "id": "e3073d",
+      "title": "S3 BONUS: I will survive (Crisis resource management)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "001df0",
+      "title": "S5 Ep. 14: What a wonderful world (Environmentally sustainable anaesthesia)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "4ef4ab",
+      "title": "S6 Ep. 1: One in ten, part 1 (Statistics)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "feae86",
+      "title": "S6 Ep. 2: One in ten, part 2 (Statistics)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "9ec623",
+      "title": "S6 Ep. 3: One in ten, part 3 (Statistics)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "c2f071",
+      "title": "S6 Ep. 4: One in ten, part 4 (Statistics)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "9d947c",
+      "title": "S6 Ep. 7: Let it be (Anaesthesia for patients at the end-of-life)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     },
+     {
+      "id": "260bfe",
+      "title": "S6 Ep. 16: We are family (Family presence in the OR)",
+      "url": "https://deepbreathspod.buzzsprout.com/1312792/episodes"
+     }
+    ]
+   },
+   {
+    "source": "ABCs of Anaesthesia",
+    "items": [
+     {
+      "id": "0f43f4",
+      "title": "Sustainability in Anaesthesia with Dr Forbes McGain",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "6c8a8a",
+      "title": "Consent in Anaesthesia with Dr Max Feinstein",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     },
+     {
+      "id": "183663",
+      "title": "Risk Management and Disagreement in Practice with Dr James",
+      "url": "https://podcasts.apple.com/nz/podcast/abcs-of-anaesthesia/id1565092843"
+     }
+    ]
+   }
+  ]
+ }
+}
