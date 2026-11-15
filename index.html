@@ -519,7 +519,7 @@ function mcqPapers(){var it=((state.lib&&state.lib.tabs.filter(function(t){retur
 function mcqKey(p,n){return 'mcq:'+p+':'+n}
 function mcqStats(p,qs){var a=0,c=0;qs.forEach(function(q){var d=state.P.done[mcqKey(p,q.n)];if(d&&d.pick){a++;if(d.ok)c++}});return {a:a,c:c}}
 function mcqBody(p,q){
-  var d=state.P.done[mcqKey(p,q.n)],sub=d&&d.pick,h='<div class="mq-stem">'+esc(q.stem)+'</div>'+(q.flag?'<p class="mut" style="font-size:13px;margin:0 0 4px">Note: the official stem omits detail (an image, trace or values) that this answer was written around, so the options may be hard to judge without it.</p>':'');
+  var d=state.P.done[mcqKey(p,q.n)],sub=d&&d.pick,h='<div class="mq-stem">'+esc(q.stem)+'</div>'+(q.img?'<img src="'+esc(q.img)+'" alt="Image for question '+q.n+'" style="display:block;max-width:100%;height:auto;border-radius:8px;margin:8px 0 12px;border:1px solid var(--line)">':'')+(q.flag?'<p class="mut" style="font-size:13px;margin:0 0 4px">Note: the official stem omits detail (an image, trace or values) that this answer was written around, so the options may be hard to judge without it.</p>':'');
   q.opts.forEach(function(o){
     var cls='',mark='';
     if(sub){if(o.l===d.pick){cls=o.ok?' ok':' no';mark=o.ok?'\u2713':'\u2717'}else if(o.ok&&!d.ok){cls=' ok';mark='\u2713'}}
