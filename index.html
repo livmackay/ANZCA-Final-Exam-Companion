@@ -629,7 +629,7 @@ function rDash(){
   h+='<h2>All study sets</h2><div class="syl">';
   h+=SYL.map(function(s){
     var st=setStats(s.n),c=(state.sets[s.n]||{}).counts||{},tot=cnt(c);
-    var empty=!tot,pc=[0,1,2].map(function(k){var n2=0,pre=s.n+':';Object.keys(state.P.los).forEach(function(kk){if(kk.indexOf(pre)===0&&state.P.los[kk][k])n2++});return n2});
+    var empty=!tot,lsx=(state.items[s.n]||[]).some(function(i){return i.type==='los'})?losStats(s.n).p:null,pc=lsx||[0,1,2].map(function(k){var n2=0,pre=s.n+':';Object.keys(state.P.los).forEach(function(kk){if(kk.indexOf(pre)===0&&state.P.los[kk][k])n2++});return n2});
     var label=empty?(state.gotSets?'No content yet':'Checking…'):'Learn / retrieve / speak '+st.pct+'%';
     return '<a class="srow'+(s.n===cur.n?' cur':'')+(empty?' empty':'')+'" href="#set-'+s.n+'"><span class="num">'+pad(s.n)+'</span><span class="stitle"><b>'+esc(s.title)+(empty?' <span class="chip mute">Empty</span>':'')+(st.due?' <span class="chip warn">'+st.due+' due</span>':'')+'</b><small>'+fmt(s.start)+' – '+fmt(endOf(s.n))+'</small></span><span class="sstat"><small class="mut">'+label+'</small><span class="bar"><i style="width:'+(empty?0:st.pct)+'%"></i></span></span>'+['First','Second','Third'].map(function(nm,i){return '<span class="spass"><small class="mut">'+nm+' pass</small><b>'+pc[i]+'/'+s.lo+'</b><span class="bar"><i style="width:'+(s.lo?Math.round(pc[i]/s.lo*100):0)+'%"></i></span></span>'}).join('')+'</a>';
   }).join('');
