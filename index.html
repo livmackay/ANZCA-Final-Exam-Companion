@@ -519,7 +519,7 @@ function mcqPapers(){var it=((state.lib&&state.lib.tabs.filter(function(t){retur
 function mcqKey(p,n){return 'mcq:'+p+':'+n}
 function mcqStats(p,qs){var a=0,c=0;qs.forEach(function(q){var d=state.P.done[mcqKey(p,q.n)];if(d&&d.pick){a++;if(d.ok)c++}});return {a:a,c:c}}
 function mcqBody(p,q){
-  var d=state.P.done[mcqKey(p,q.n)],sub=d&&d.pick,h='<div class="mq-stem">'+esc(q.stem)+'</div>';
+  var d=state.P.done[mcqKey(p,q.n)],sub=d&&d.pick,h='<div class="mq-stem">'+esc(q.stem)+'</div>'+(q.flag?'<p class="mut" style="font-size:13px;margin:0 0 4px">Note: the official stem omits detail (an image, trace or values) that this answer was written around, so the options may be hard to judge without it.</p>':'');
   q.opts.forEach(function(o){
     var cls='',mark='';
     if(sub){if(o.l===d.pick){cls=o.ok?' ok':' no';mark=o.ok?'\u2713':'\u2717'}else if(o.ok&&!d.ok){cls=' ok';mark='\u2713'}}
@@ -529,7 +529,6 @@ function mcqBody(p,q){
   h+='<div class="mq-why">'+(q.expl?'<div style="background:var(--accent-soft)"><b>'+(d.ok?'Correct. ':'The answer is '+q.ans+'. ')+'</b>'+esc(q.expl)+'</div>':'');
   q.opts.forEach(function(o){h+='<div class="'+(o.ok?'c':'w')+'"><b>'+o.l+'. '+esc(o.t)+'</b> \u2014 '+(o.ok?'correct. ':'incorrect. ')+esc(o.why)+'</div>'});
   h+='</div>';
-  if(q.orig)h+='<p class="mut" style="font-size:13px;margin-top:12px">Original ANZCA stem for reference: '+esc(q.orig)+'</p>';
   if(q.src&&q.src.length)h+='<p class="mut" style="font-size:13px;margin-top:6px">Sources: '+q.src.map(function(u,i){return '<a href="'+esc(u)+'" target="_blank" rel="noopener">'+(i+1)+'</a>'}).join(' \u00b7 ')+'</p>';
   return h+'<div class="row" style="margin-top:14px"><button class="btn" data-act="mcqRetry" data-q="'+q.n+'">Clear my answer</button></div>';
 }
