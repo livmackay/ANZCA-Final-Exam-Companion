@@ -125,6 +125,26 @@
    "items": []
   },
   {
+   "id": "mcq",
+   "title": "Past MCQ Papers",
+   "items": [
+    {
+     "id": "mcq-papers",
+     "kind": "mcq",
+     "title": "Past MCQ papers",
+     "papers": [
+      {
+       "id": "2024.1",
+       "title": "2024.1 Final Exam MCQ Paper",
+       "file": "mcq-2024.1.json",
+       "count": 150,
+       "note": "Practice version: each question is based on the official 2024.1 stem, but 82 of the 150 have been reworded or had their options rebuilt so that they have one defensible answer. The original ANZCA stem is shown after you submit. The official answer key is not published."
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "vivas",
    "title": "Model vivas",
    "items": [

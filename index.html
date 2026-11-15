@@ -165,6 +165,18 @@ input[type=number]{font:inherit;color:var(--ink);background:var(--bg);border:1px
 @media (max-width:720px){.srow .num{text-align:left}.nav{gap:0}.nav a{padding:6px 9px;font-size:14px}.brand small{display:none}}
 @media (max-width:720px){.tabs{flex-wrap:nowrap;overflow-x:auto;gap:0;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tabs a,.tabs button{white-space:nowrap;flex:none;padding-left:12px;padding-right:12px}}
 .selfchk .check span{font-family:var(--ui);font-size:15px;line-height:1.45}.selfchk .selfn{font-family:var(--ui)}
+.mq-opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-top:8px;background:var(--surface)}
+.mq-opt input{margin-top:3px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.mq-opt .t{flex:1;min-width:0}
+.mq-opt .m{flex:none;font-weight:700;font-size:18px;line-height:1.2;min-width:22px;text-align:center}
+.mq-opt.ok{background:var(--good-soft);border-color:var(--good)}
+.mq-opt.no{background:var(--bad-soft);border-color:var(--bad)}
+.mq-opt.ok .m{color:var(--good)}.mq-opt.no .m{color:var(--bad)}
+.mq-why{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.mq-why div{padding:10px 12px;border-radius:10px;background:var(--bg);font-size:14px}
+.mq-why .c{border-left:4px solid var(--good)}.mq-why .w{border-left:4px solid var(--bad)}
+.mq-stem{font-size:16px;line-height:1.55;margin:4px 0 6px}
+.mq-n{display:inline-block;min-width:2.2em;font-weight:600;color:var(--accent)}
 </style>
 
 </head><body>
@@ -245,7 +257,7 @@ function losStats(n){var tot=0,p=[0,0,0];(state.items[n]||[]).filter(function(i)
 function sortItems(a){return a.slice().sort(function(x,y){return (x.order||0)-(y.order||0)})}
 
 /* ---------- state ---------- */
-var state={pod:null,lib:null,sets:{},items:{},loaded:{},P:defP(),gotSets:false,slow:false,saveErr:'',session:null,practice:null,open:{},pend:{},sync:{user:null,msg:'',busy:false,last:0,sdk:false}};
+var state={mcq:{},pod:null,lib:null,sets:{},items:{},loaded:{},P:defP(),gotSets:false,slow:false,saveErr:'',session:null,practice:null,open:{},pend:{},sync:{user:null,msg:'',busy:false,last:0,sdk:false}};
 function defP(){return {v:1,cards:{},done:{},los:{},saq:{},viva:{},daily:{},att:{},mt:{},settings:{newPerDay:15}}}
 function normP(d){var p=defP();if(!d)return p;d=JSON.parse(JSON.stringify(d));['cards','done','los','saq','viva','daily','att','mt'].forEach(function(k){if(d[k]&&typeof d[k]==='object')p[k]=d[k]});if(d.settings&&d.settings.newPerDay>=0)p.settings.newPerDay=d.settings.newPerDay;return p}
 var tmr=null,dirty=false,writing=false,wt=null,clock=null;
@@ -475,7 +487,7 @@ function sched(c,r){
 function route(){
   var h=location.hash.replace(/^#/,'')||'dashboard',m=h.match(/^set-(\d+)(?:-(learn|speak|retrieve|saq|viva|los|docs|podcasts|trials|refs))?$/);
   if(m&&+m[1]>=1&&+m[1]<=36)return {name:'set',n:+m[1],tab:m[2]||null};
-  var lm=h.match(/^library(?:-(neuro|resp|cvs|gi|renal|vivas))?$/);if(lm)return {name:'library',tab:lm[1]||null};
+  var lm=h.match(/^library(?:-(neuro|resp|cvs|gi|renal|vivas|mcq)(?:-(\d{4}\.\d))?)?$/);if(lm)return {name:'library',tab:lm[1]||null,paper:lm[2]||null};
   return {name:['dashboard','review','weak','data'].indexOf(h)>-1?h:'dashboard'};
 }
 function renderNav(r){
@@ -503,12 +515,58 @@ function podHtml(n){
   if(!g.length)return '<div class="empty">No podcasts are matched to this set.</div>';
   return '<p class="mut" style="font-size:13px">Links open the podcast\u2019s catalogue page. Search for the episode title there. Tick each one when you have listened to it.</p>'+podList('pod:'+n,g);
 }
+function mcqPapers(){var it=((state.lib&&state.lib.tabs.filter(function(t){return t.id==='mcq'})[0]||{}).items||[])[0];return it?it.papers.slice().sort(function(a,b){return parseFloat(b.id)-parseFloat(a.id)}):[]}
+function mcqKey(p,n){return 'mcq:'+p+':'+n}
+function mcqStats(p,qs){var a=0,c=0;qs.forEach(function(q){var d=state.P.done[mcqKey(p,q.n)];if(d&&d.pick){a++;if(d.ok)c++}});return {a:a,c:c}}
+function mcqBody(p,q){
+  var d=state.P.done[mcqKey(p,q.n)],sub=d&&d.pick,h='<div class="mq-stem">'+esc(q.stem)+'</div>';
+  q.opts.forEach(function(o){
+    var cls='',mark='';
+    if(sub){if(o.l===d.pick){cls=o.ok?' ok':' no';mark=o.ok?'\u2713':'\u2717'}else if(o.ok&&!d.ok){cls=' ok';mark='\u2713'}}
+    h+='<label class="mq-opt'+cls+'"><input type="checkbox" data-act="mcqPick" data-q="'+q.n+'" data-l="'+o.l+'"'+(sub&&o.l===d.pick?' checked':'')+(sub?' disabled':'')+'><span class="t"><b>'+o.l+'.</b> '+esc(o.t)+'</span><span class="m" aria-label="'+(mark==='\u2713'?'correct':mark?'incorrect':'')+'">'+mark+'</span></label>';
+  });
+  if(!sub)return h+'<div class="row" style="margin-top:16px"><button class="btn primary" data-act="mcqSubmit" data-q="'+q.n+'">Submit</button></div>';
+  h+='<div class="mq-why">'+(q.expl?'<div style="background:var(--accent-soft)"><b>'+(d.ok?'Correct. ':'The answer is '+q.ans+'. ')+'</b>'+esc(q.expl)+'</div>':'');
+  q.opts.forEach(function(o){h+='<div class="'+(o.ok?'c':'w')+'"><b>'+o.l+'. '+esc(o.t)+'</b> \u2014 '+(o.ok?'correct. ':'incorrect. ')+esc(o.why)+'</div>'});
+  h+='</div>';
+  if(q.orig)h+='<p class="mut" style="font-size:13px;margin-top:12px">Original ANZCA stem for reference: '+esc(q.orig)+'</p>';
+  if(q.src&&q.src.length)h+='<p class="mut" style="font-size:13px;margin-top:6px">Sources: '+q.src.map(function(u,i){return '<a href="'+esc(u)+'" target="_blank" rel="noopener">'+(i+1)+'</a>'}).join(' \u00b7 ')+'</p>';
+  return h+'<div class="row" style="margin-top:14px"><button class="btn" data-act="mcqRetry" data-q="'+q.n+'">Clear my answer</button></div>';
+}
+function mcqChip(p,q){var d=state.P.done[mcqKey(p,q.n)];return d&&d.pick?'<span class="chip '+(d.ok?'good':'warn')+'">'+(d.ok?'\u2713 Correct':'\u2717 Wrong')+'</span>':''}
+function rMcq(r){
+  var P=mcqPapers(),h='';
+  if(!r.paper){
+    h+='<h2 style="margin:6px 0 4px">Past MCQ papers</h2><p class="sub" style="margin-top:0">Newest paper first. Open a paper, answer each question, then press Submit to see why each option is right or wrong.</p>';
+    return h+P.map(function(p){var q=state.mcq[p.id],st=q?mcqStats(p.id,q.questions):null;
+      return '<a class="card" style="display:block;margin-bottom:10px;text-decoration:none;color:inherit" href="#library-mcq-'+p.id+'"><div style="font-weight:600;font-size:17px">'+esc(p.title)+'</div><div class="mut" style="font-size:13px;margin-top:2px">'+p.count+' questions'+(st?' \u00b7 '+st.a+' answered, '+st.c+' correct':'')+'</div></a>'}).join('');
+  }
+  var pp=P.filter(function(x){return x.id===r.paper})[0],D=state.mcq[r.paper];
+  if(!pp)return '<div class="empty">Paper not found.</div>';
+  if(!D){
+    if(D!==false&&!state.mcq['_l'+r.paper]){state.mcq['_l'+r.paper]=1;fetch(pp.file,{cache:'no-cache'}).then(function(x){return x.json()}).then(function(j){state.mcq[r.paper]=j;render()}).catch(function(){state.mcq[r.paper]=false;render()})}
+    return '<p><a href="#library-mcq">\u2190 Past MCQ papers</a></p><div class="empty">Loading the paper\u2026</div>';
+  }
+  if(D===false)return '<p><a href="#library-mcq">\u2190 Past MCQ papers</a></p><div class="empty">The paper could not be loaded. Check your connection and try again.</div>';
+  var st=mcqStats(r.paper,D.questions);
+  h+='<p><a href="#library-mcq">\u2190 Past MCQ papers</a></p><h2 style="margin:6px 0 4px">'+esc(pp.title)+'</h2>';
+  if(pp.note)h+='<div class="callout" style="background:var(--warn-soft);border-radius:10px;padding:10px 14px;font-size:14px;margin:8px 0 12px">'+esc(pp.note)+'</div>';
+  h+='<div class="mut" style="font-size:13px;margin-bottom:12px" data-mqscore>'+st.a+' of '+D.questions.length+' answered \u00b7 '+st.c+' correct</div>';
+  return h+D.questions.map(function(q){var key=mcqKey(r.paper,q.n);
+    return '<details class="ch" data-key="'+key+'"'+(state.open[key]?' open':'')+'><summary><span><span class="mq-n">'+q.n+'</span>'+esc(q.stem.length>90?q.stem.slice(0,90).replace(/\s+\S*$/,'')+'\u2026':q.stem)+'</span><span data-mqchip>'+mcqChip(r.paper,q)+'</span></summary><div class="inner" data-mqbody>'+mcqBody(r.paper,q)+'</div></details>'}).join('');
+}
+function mcqRefresh(el,n){
+  var r=route(),D=state.mcq[r.paper],q=D.questions.filter(function(x){return x.n===n})[0],det=el.closest('details');
+  det.querySelector('[data-mqbody]').innerHTML=mcqBody(r.paper,q);det.querySelector('[data-mqchip]').innerHTML=mcqChip(r.paper,q);
+  var st=mcqStats(r.paper,D.questions),sc=document.querySelector('[data-mqscore]');if(sc)sc.textContent=st.a+' of '+D.questions.length+' answered \u00b7 '+st.c+' correct';
+}
 function rLibrary(r){
   var L=state.lib,h='<div class="eyebrow">Background knowledge</div><h1>Library</h1><p class="sub">Reference guides that apply across several weeks. They sit outside the weekly plan.</p>';
   if(!L)return h+'<div class="empty">'+(state.gotSets?'The library could not be loaded. Check your connection and reopen the app.':'Loading the library…')+'</div>';
   var tabs=L.tabs,tab=r.tab||(tabs.filter(function(t){return t.items.length})[0]||tabs[0]).id,cur=tabs.filter(function(t){return t.id===tab})[0]||tabs[0];
   h+='<div class="tabs">'+tabs.map(function(t){return '<a href="#library-'+t.id+'" class="'+(t.id===cur.id?'on':'')+'">'+esc(t.title)+(t.items.length?'<small>'+t.items.length+'</small>':'')+'</a>'}).join('')+'</div>';
   if(!cur.items.length)return h+'<div class="empty">Nothing in this section yet.</div>';
+  if(cur.id==='mcq')return h+rMcq(r);
   cur.items.forEach(function(g){
     if(g.groups){h+='<h2 style="margin:6px 0 4px">'+esc(g.title)+'</h2>'+(g.intro?'<p class="sub" style="margin-top:0">'+esc(g.intro)+'</p>':'')+podList('lib:'+g.id,g.groups);return}
     var ch=g.chapters||[],n=ch.filter(function(c){return state.P.done['lib:'+c.id]}).length;
@@ -841,6 +899,13 @@ var A={
   startClock:function(){var p=state.practice;p.started=true;p.stopped=false;state._scroll=window.scrollY;render()},
   stopClock:function(){var p=state.practice;stopClock();p.stopped=true;p.started=false;state._scroll=window.scrollY;render()},
   revealPractice:function(){var p=state.practice;stopClock();p.revealed=true;p.stopped=true;p.checks=[];state._scroll=window.scrollY;render()},
+  mcqPick:function(el){if(!el.checked)return;el.closest('details').querySelectorAll('input[data-act=mcqPick]').forEach(function(x){if(x!==el)x.checked=false})},
+  mcqSubmit:function(el){
+    var n=+el.dataset.q,det=el.closest('details'),pick=null;det.querySelectorAll('input[data-act=mcqPick]').forEach(function(x){if(x.checked)pick=x.dataset.l});
+    if(!pick){toast('Tick an answer first');return}
+    var r=route(),D=state.mcq[r.paper],q=D.questions.filter(function(x){return x.n===n})[0],ok=q.opts.filter(function(o){return o.l===pick})[0].ok;
+    state.P.done[mcqKey(r.paper,n)]={pick:pick,ok:ok,at:today()};saveP();mcqRefresh(el,n)},
+  mcqRetry:function(el){var n=+el.dataset.q,r=route();delete state.P.done[mcqKey(r.paper,n)];saveP();mcqRefresh(el,n)},
   podTick:function(el){var k=el.dataset.key,P=state.P;if(el.checked)P.done[k]=today();else delete P.done[k];saveP();var w=el.closest('.card'),root=w&&w.parentNode,all=root.querySelectorAll('input[data-act=podTick]'),n=0;all.forEach(function(x){if(x.checked)n++});var c=root.querySelector('[data-podn]');if(c)c.textContent=n+' of '+all.length+' listened to';var bar=root.querySelector('.prog i');if(bar)bar.style.width=Math.round(n/Math.max(1,all.length)*100)+'%'},
   selfTick:function(el){var w=el.closest('.selfchk'),all=w.querySelectorAll('input[type=checkbox]'),n=0;all.forEach(function(x){if(x.checked)n++});w.querySelector('.selfn b').textContent=n+' of '+all.length},
   tick:function(el){var p=state.practice;p.checks[+el.dataset.i]=el.checked;var n=(p.it.rubric||[]).length;document.getElementById('score').textContent=p.checks.filter(Boolean).length+' of '+n},
