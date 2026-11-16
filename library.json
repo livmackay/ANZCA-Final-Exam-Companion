@@ -181,6 +181,13 @@
        "file": "mcq-2021.1.json",
        "count": 141,
        "note": "Questions use the official ANZCA stems from the Chair's report. The answer options, answer key and explanations were reconstructed or written for practice and are not official ANZCA material, which is not published. Figures marked as recalled or teaching substitutes may differ from what candidates saw."
+      },
+      {
+       "id": "2020.2",
+       "title": "2020.2 Final Exam MCQ Paper",
+       "file": "mcq-2020.2.json",
+       "count": 144,
+       "note": "Questions use the official ANZCA stems from the Chair's report. The answer options, answer key and explanations were reconstructed or written for practice and are not official ANZCA material, which is not published. Figures marked as recalled or teaching substitutes may differ from what candidates saw."
       }
      ]
     }
