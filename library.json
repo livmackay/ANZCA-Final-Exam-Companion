@@ -139,6 +139,48 @@
        "file": "mcq-2024.1.json",
        "count": 150,
        "note": "Questions use the official ANZCA 2024.1 stems. The answer options, answer key and explanations were reconstructed or written for practice and are not the official ANZCA options or key, which are not published. Questions marked with a note rely on an image or values that the official stem does not include."
+      },
+      {
+       "id": "2023.2",
+       "title": "2023.2 Final Exam MCQ Paper",
+       "file": "mcq-2023.2.json",
+       "count": 146,
+       "note": "Questions use the official ANZCA stems from the Chair's report. The answer options, answer key and explanations were reconstructed or written for practice and are not official ANZCA material, which is not published. Figures marked as recalled or teaching substitutes may differ from what candidates saw."
+      },
+      {
+       "id": "2023.1",
+       "title": "2023.1 Final Exam MCQ Paper",
+       "file": "mcq-2023.1.json",
+       "count": 144,
+       "note": "Questions use the official ANZCA stems from the Chair's report. The answer options, answer key and explanations were reconstructed or written for practice and are not official ANZCA material, which is not published. Figures marked as recalled or teaching substitutes may differ from what candidates saw."
+      },
+      {
+       "id": "2022.2",
+       "title": "2022.2 Final Exam MCQ Paper",
+       "file": "mcq-2022.2.json",
+       "count": 141,
+       "note": "Questions use the official ANZCA stems from the Chair's report. The answer options, answer key and explanations were reconstructed or written for practice and are not official ANZCA material, which is not published. Figures marked as recalled or teaching substitutes may differ from what candidates saw."
+      },
+      {
+       "id": "2022.1",
+       "title": "2022.1 Final Exam MCQ Paper",
+       "file": "mcq-2022.1.json",
+       "count": 149,
+       "note": "Questions use the official ANZCA stems from the Chair's report. The answer options, answer key and explanations were reconstructed or written for practice and are not official ANZCA material, which is not published. Figures marked as recalled or teaching substitutes may differ from what candidates saw."
+      },
+      {
+       "id": "2021.2",
+       "title": "2021.2 Final Exam MCQ Paper",
+       "file": "mcq-2021.2.json",
+       "count": 137,
+       "note": "Questions use the official ANZCA stems from the Chair's report. The answer options, answer key and explanations were reconstructed or written for practice and are not official ANZCA material, which is not published. Figures marked as recalled or teaching substitutes may differ from what candidates saw."
+      },
+      {
+       "id": "2021.1",
+       "title": "2021.1 Final Exam MCQ Paper",
+       "file": "mcq-2021.1.json",
+       "count": 141,
+       "note": "Questions use the official ANZCA stems from the Chair's report. The answer options, answer key and explanations were reconstructed or written for practice and are not official ANZCA material, which is not published. Figures marked as recalled or teaching substitutes may differ from what candidates saw."
       }
      ]
     }
