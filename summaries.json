@@ -1,0 +1,328 @@
+{
+ "base": "https://images.squarespace-cdn.com/content/v1/5e6d5df1ff954d5b7b139463/",
+ "credit": "ICU One Pager summaries by Nick Mark and contributors, onepagericu.com, licensed CC BY-SA 3.0 (creativecommons.org/licenses/by-sa/3.0). Images are loaded from the original site and cached on your device.",
+ "sets": {
+  "1": [
+   {
+    "id": "undifferentiated-shock",
+    "title": "Undifferentiated shock",
+    "img": "3f313850-69f8-457a-8cc9-066aa0ae4fa7/ICU_one_pager_undifferentiated_shock.png",
+    "url": "https://onepagericu.com/undifferentiated-shock"
+   },
+   {
+    "id": "vasopressors",
+    "title": "Vasopressors",
+    "img": "ab37fa96-7b6b-4e4d-9102-226b584542ed/ICU_one_pager_vasopressors.1.2.png",
+    "url": "https://onepagericu.com/vasopressors"
+   },
+   {
+    "id": "fluid-responsiveness",
+    "title": "Fluid responsiveness",
+    "img": "1e075241-7c29-4c67-b160-67114811ebda/ICU_one_pager_fluid_responsiveness_v1.png",
+    "url": "https://onepagericu.com/fluid-responsiveness"
+   }
+  ],
+  "2": [
+   {
+    "id": "hemorrhagic-shock",
+    "title": "Haemorrhagic shock resuscitation",
+    "img": "18fbdcfe-cb17-481e-b967-c2fc8fd76245/ICU_OnePager_Hemorrhagic_Shock_v11.png",
+    "url": "https://onepagericu.com/hemorrhagic-shock"
+   },
+   {
+    "id": "transfusions",
+    "title": "Blood products & transfusion",
+    "img": "3d4095b7-392c-4f9b-8d6e-605ea4db11d4/ICU_one_pager_blood_products.png",
+    "url": "https://onepagericu.com/transfusions"
+   }
+  ],
+  "3": [
+   {
+    "id": "vent-basics",
+    "title": "Mechanical ventilator basics",
+    "img": "1585949746817-J5WQGYZVM5QN03TFOHGQ/ICU_one_pager_vent_basics.png",
+    "url": "https://onepagericu.com/vent-basics"
+   },
+   {
+    "id": "ards",
+    "title": "ARDS",
+    "img": "1604352514534-SFA20812W06X6K8PM9XI/ICU_one_pager_ARDS_v1.1.png",
+    "url": "https://onepagericu.com/ards"
+   },
+   {
+    "id": "vent-weaning",
+    "title": "Ventilator weaning",
+    "img": "1585087578092-4O8PSP3VJ7HYMI16Y5E9/ICU_one_pagers_vent_weaning.png",
+    "url": "https://onepagericu.com/vent-weaning"
+   },
+   {
+    "id": "nippv",
+    "title": "Non-invasive positive pressure ventilation",
+    "img": "83f0979f-9cc4-4130-90b7-5861072600ec/ICU_one_pager_NIPPV_v11.png",
+    "url": "https://onepagericu.com/nippv"
+   },
+   {
+    "id": "hypoxia",
+    "title": "Hypoxia & hypoxaemia",
+    "img": "dd8e75d2-abf5-431e-bd5b-f2383cd9eab1/ICU_One_pager_hypoxemia.png",
+    "url": "https://onepagericu.com/hypoxia"
+   },
+   {
+    "id": "mask-o2-delivery",
+    "title": "Mask oxygen delivery",
+    "img": "dd586fed-00c6-409b-8f41-4a3f9db02844/ICU_one_pager_oxygen_masks.png",
+    "url": "https://onepagericu.com/mask-o2-delivery"
+   },
+   {
+    "id": "nasal-oxygen-delivery",
+    "title": "Nasal oxygen delivery",
+    "img": "1604352194078-8D1IQ5WH5AW0U06KI9DC/ICU_one_pager_nasal_o2.png",
+    "url": "https://onepagericu.com/nasal-oxygen-delivery"
+   },
+   {
+    "id": "tracheostomy",
+    "title": "Percutaneous tracheostomy",
+    "img": "d8a8653d-a452-4b6a-bc92-0bb9f508b1c8/ICU_one_Pager_perc_tracheostomy.png",
+    "url": "https://onepagericu.com/tracheostomy"
+   }
+  ],
+  "5": [
+   {
+    "id": "acid-base",
+    "title": "Acid/base interpretation",
+    "img": "ca393b5f-335f-44b4-aec6-dfda929a4bc4/ICU_one_pager_acid_base_v14.png",
+    "url": "https://onepagericu.com/acid-base"
+   },
+   {
+    "id": "lactic-acidosis",
+    "title": "Lactic acidosis",
+    "img": "6b84cf67-204d-441a-b40f-9b1c46a0f8ae/ICU_one_pager_lactic_acidosis.png",
+    "url": "https://onepagericu.com/lactic-acidosis"
+   },
+   {
+    "id": "ketosis",
+    "title": "Ketosis disorders: DKA, HHS, AKA",
+    "img": "7f4492f3-a817-4e08-8f66-9dd9d690128d/ICU_One_Pager_Ketoacidosis_v12.png",
+    "url": "https://onepagericu.com/ketosis"
+   },
+   {
+    "id": "rrt",
+    "title": "Renal replacement therapy",
+    "img": "1613624436580-QXIJS3E8O3I5Q7UNPX2B/ICU_one_pager_RRT.png",
+    "url": "https://onepagericu.com/rrt"
+   },
+   {
+    "id": "diuresis",
+    "title": "Achieving a negative fluid balance (diuresis)",
+    "img": "34b7503a-ce48-4a5f-8289-e3b8629f60eb/ICU_one_pager_fluid_balance_v14.png",
+    "url": "https://onepagericu.com/diuresis"
+   },
+   {
+    "id": "pulmonary-renal",
+    "title": "Pulmonary-renal syndromes",
+    "img": "037bbbac-b881-4aa7-b1d1-1e135defff30/ICU_one_pager_Pulmonar_Renal_Syndrome.png",
+    "url": "https://onepagericu.com/pulmonary-renal"
+   }
+  ],
+  "4": [
+   {
+    "id": "hlh",
+    "title": "Haemophagocytic lymphohistiocytosis (HLH)",
+    "img": "750284f4-d458-4449-95f1-5df595cd09e4/ICU_One_Pager_HLH_v11.png",
+    "url": "https://onepagericu.com/hlh"
+   }
+  ],
+  "6": [
+   {
+    "id": "evd",
+    "title": "External ventricular drain",
+    "img": "0b876e7c-8c06-489a-b3b1-03aafe19db12/ICU_one_pager_EVD_V11.png",
+    "url": "https://onepagericu.com/evd"
+   }
+  ],
+  "7": [
+   {
+    "id": "chest-tubes",
+    "title": "Chest tubes",
+    "img": "07f49bbe-14ca-45fe-896d-b133f25b0b80/ICU_one_pager_chest_tubes.png",
+    "url": "https://onepagericu.com/chest-tubes"
+   },
+   {
+    "id": "abdominal-compartment-syndrome",
+    "title": "Abdominal compartment syndrome",
+    "img": "cb1f0b05-9ccc-4c3d-b2b4-ffd137aefefa/ICU_one_pager_Abdominal_Compartment_Syndrome.png",
+    "url": "https://onepagericu.com/abdominal-compartment-syndrome"
+   }
+  ],
+  "8": [
+   {
+    "id": "hyperthermic_toxidromes",
+    "title": "Hyperthermic toxidromes",
+    "img": "789bee69-9813-4830-8277-559a1ef19392/ICU_one_pager_hyperthermic_toxidromes.png",
+    "url": "https://onepagericu.com/hyperthermic_toxidromes"
+   }
+  ],
+  "9": [
+   {
+    "id": "running-a-code",
+    "title": "Running a code",
+    "img": "c3205337-f446-4790-a910-d8006300bea5/ICU_One_Pager_Running_a_Code.png",
+    "url": "https://onepagericu.com/running-a-code"
+   },
+   {
+    "id": "nutrition",
+    "title": "Enteral nutrition in ICU",
+    "img": "99c681b6-7192-43d9-90b8-4a097cb11127/ICU_one_pager_enteral_nutrition.png",
+    "url": "https://onepagericu.com/nutrition"
+   }
+  ],
+  "10": [
+   {
+    "id": "cvp",
+    "title": "Central Venous Pressure (CVP) monitoring",
+    "img": "ad01ad4b-3128-47a2-9f49-a246c8b0d134/ICU_OnePager_CVP.png",
+    "url": "https://onepagericu.com/cvp"
+   },
+   {
+    "id": "a-lines",
+    "title": "Arterial lines",
+    "img": "1604357261203-DMCPIU9THG7OHZIKY6Q2/ICU_one_pager_arterial_line.png",
+    "url": "https://onepagericu.com/a-lines"
+   },
+   {
+    "id": "pulse-oximetry",
+    "title": "Pulse oximetry",
+    "img": "c6ffa73a-f339-4aeb-b917-ae2ddf9dd449/ICU_one_pager_pulse_oximeter.png",
+    "url": "https://onepagericu.com/pulse-oximetry"
+   },
+   {
+    "id": "capnography",
+    "title": "Capnography & end-tidal CO2",
+    "img": "f1944cc9-b843-42c7-9fc0-b8c2faa89931/ICU_one_pager_end_tidal_co2_v11.png",
+    "url": "https://onepagericu.com/capnography"
+   },
+   {
+    "id": "pocus",
+    "title": "POCUS basics",
+    "img": "1600971562262-SANFUSHXB050QKCKILMA/FocusPOCUS_Basics_OnePager.JPG",
+    "url": "https://onepagericu.com/pocus"
+   }
+  ],
+  "12": [
+   {
+    "id": "pulmonary-embolism",
+    "title": "Pulmonary embolism",
+    "img": "b4de28f6-3e59-43c9-88ee-5be29b4fe316/ICU_one_pager_PE.png",
+    "url": "https://onepagericu.com/pulmonary-embolism"
+   },
+   {
+    "id": "transvenous-epicardial-pacers",
+    "title": "Transvenous & epicardial pacers",
+    "img": "35c064d6-2566-4493-9dd1-a0192d51ec64/ICU_one_pager_external_pacemakers_V11.png",
+    "url": "https://onepagericu.com/transvenous-epicardial-pacers"
+   }
+  ],
+  "13": [
+   {
+    "id": "ecmo-fundamentals",
+    "title": "ECMO fundamentals",
+    "img": "59967928-ef6c-48f7-9e0d-69201c0161e8/ICU_One_Pager_ECMO_fundamentals.png",
+    "url": "https://onepagericu.com/ecmo-fundamentals"
+   },
+   {
+    "id": "ecmo-troubleshooting",
+    "title": "ECMO troubleshooting",
+    "img": "da343cdc-0640-4547-a83b-c2d2ff283676/ICU_One_Pager_ECMO_troubleshooting.png",
+    "url": "https://onepagericu.com/ecmo-troubleshooting"
+   },
+   {
+    "id": "iabp",
+    "title": "Intra-aortic balloon pump (IABP)",
+    "img": "aa054ebc-13c1-4098-a02c-3b7603f34ea5/ICU_One_pager_IABP.png",
+    "url": "https://onepagericu.com/iabp"
+   },
+   {
+    "id": "impella",
+    "title": "Impella and left ventricular assist devices",
+    "img": "0971443a-b1cb-4cd3-8ece-8042a8530968/ICU_One_pager_impella.png",
+    "url": "https://onepagericu.com/impella"
+   },
+   {
+    "id": "lvad",
+    "title": "Left ventricular assist device (LVAD)",
+    "img": "1658355027237-VBH7XCV70X617Q4V9HI2/ICU_One_pager_LVAD.png",
+    "url": "https://onepagericu.com/lvad"
+   },
+   {
+    "id": "arrest-on-mcs",
+    "title": "Cardiac arrest on mechanical circulatory support",
+    "img": "9bb213a1-d615-4820-b6e8-c7e13fd45658/ICU_One_pager_cardiac+arrest+in+MCS.png",
+    "url": "https://onepagericu.com/arrest-on-mcs"
+   }
+  ],
+  "16": [
+   {
+    "id": "aws",
+    "title": "Alcohol withdrawal syndromes",
+    "img": "0ee095a6-0766-49e9-b5bf-bf387349c374/ICU_one_pager_AWS.png",
+    "url": "https://onepagericu.com/aws"
+   }
+  ],
+  "22": [
+   {
+    "id": "trach-emergencies",
+    "title": "Tracheostomy emergencies",
+    "img": "1635889339251-LWVTV3SJMA6N8FYKGPGF/ICU_one_pager_tracheostomy_emergencies.png",
+    "url": "https://onepagericu.com/trach-emergencies"
+   }
+  ],
+  "23": [
+   {
+    "id": "bistof",
+    "title": "Neuromuscular blockers, EEG, BIS & TOF",
+    "img": "012ce0a6-8dc6-4c90-9b6c-893ae09f374e/ICU_one_pager_NMB.png",
+    "url": "https://onepagericu.com/bistof"
+   }
+  ],
+  "26": [
+   {
+    "id": "pleural-manometry",
+    "title": "Pleural manometry",
+    "img": "f15d327d-5635-42ce-acba-a13007a21ee3/ICU_one_pager_pleural_manometry.png",
+    "url": "https://onepagericu.com/pleural-manometry"
+   },
+   {
+    "id": "hemoptysis",
+    "title": "Massive haemoptysis",
+    "img": "2a4538a4-aebc-4eb8-9cee-11528d44f860/ICU_one_Pager_massive_hemoptysis_v11.png",
+    "url": "https://onepagericu.com/hemoptysis"
+   }
+  ],
+  "17": [
+   {
+    "id": "minnesota-tubes",
+    "title": "Minnesota tube",
+    "img": "dea9dedd-ef2e-425e-a01c-a905895f64b9/ICU_One_Pager_Minnesota_tube.png",
+    "url": "https://onepagericu.com/minnesota-tubes"
+   }
+  ]
+ },
+ "excluded": [
+  {
+   "id": "cystic-lung-disease",
+   "title": "Cystic lung disease"
+  },
+  {
+   "id": "in-flight-medical",
+   "title": "In-flight medical emergencies"
+  },
+  {
+   "id": "law-enforcement-in-icu",
+   "title": "Law enforcement in the ICU"
+  },
+  {
+   "id": "icu-sustainability",
+   "title": "ICU sustainability"
+  }
+ ]
+}

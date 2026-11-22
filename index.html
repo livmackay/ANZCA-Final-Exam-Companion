@@ -407,6 +407,7 @@ async function loadContent(){
     }catch(err){}
   }));
   try{state.pod=await (await fetch('podcasts.json',{cache:'no-cache'})).json()}catch(err){}
+  try{state.sum=await (await fetch('summaries.json',{cache:'no-cache'})).json()}catch(err){}
   try{state.lib=await (await fetch('library.json',{cache:'no-cache'})).json()}catch(err){}
   state.gotSets=true;
 }
@@ -486,7 +487,7 @@ function sched(c,r){
 
 /* ---------- routing and rendering ---------- */
 function route(){
-  var h=location.hash.replace(/^#/,'')||'dashboard',m=h.match(/^set-(\d+)(?:-(learn|speak|retrieve|saq|viva|los|docs|podcasts|trials|refs))?$/);
+  var h=location.hash.replace(/^#/,'')||'dashboard',m=h.match(/^set-(\d+)(?:-(learn|summaries|speak|retrieve|saq|viva|los|docs|podcasts|trials|refs))?$/);
   if(m&&+m[1]>=1&&+m[1]<=36)return {name:'set',n:+m[1],tab:m[2]||null};
   var lm=h.match(/^library(?:-(neuro|resp|cvs|gi|renal|vivas|mcq)(?:-(\d{4}\.\d))?)?$/);if(lm)return {name:'library',tab:lm[1]||null,paper:lm[2]||null};
   return {name:['dashboard','review','weak','data'].indexOf(h)>-1?h:'dashboard'};
@@ -497,6 +498,16 @@ function renderNav(r){
   document.getElementById('nav').innerHTML=items.map(function(x){
     var on=r.name===x[0]||(x[0]==='dashboard'&&r.name==='set');
     return '<a href="#'+x[0]+'" class="'+(on?'on':'')+'">'+x[1]+(x[0]==='review'&&due?'<span class="badge">'+due+'</span>':'')+'</a>'}).join('');
+}
+function sumItems(n){return state.sum&&state.sum.sets&&state.sum.sets[n]||[]}
+function sumCount(n){return sumItems(n).length}
+function sumHtml(n){
+  if(!state.sum)return '<div class="empty">'+(state.gotSets?'The summaries could not be loaded. Check your connection and reopen the app.':'Loading summaries\u2026')+'</div>';
+  var L=sumItems(n);if(!L.length)return '<div class="empty">No one-page summaries are matched to this set.</div>';
+  var B=state.sum.base;
+  return '<p class="mut" style="font-size:13px">One-page ICU summaries. Tap an image to open it full size. They are saved on this device the first time you view them.</p><div class="row" style="margin:0 0 12px"><button class="btn" data-act="sumOffline" data-n="'+n+'">Save this set for offline</button><span class="mut" style="font-size:13px" data-sumst></span></div>'+
+  L.map(function(x){return '<div class="card" style="padding:14px 16px;margin-bottom:14px"><h2 style="margin:0 0 8px">'+esc(x.title)+'</h2><a href="'+esc(B+x.img)+'" target="_blank" rel="noopener"><img src="'+esc(B+x.img)+'" crossorigin="anonymous" loading="lazy" alt="'+esc(x.title)+' one-page summary" style="display:block;width:100%;height:auto;border-radius:8px;border:1px solid var(--line)"></a><p class="mut" style="font-size:12.5px;margin:8px 0 0"><a href="'+esc(x.url)+'" target="_blank" rel="noopener">Open on onepagericu.com (PDF and PNG downloads)</a></p></div>'}).join('')+
+  '<p class="mut" style="font-size:12.5px">'+esc(state.sum.credit)+'</p>';
 }
 function podGroups(n){return state.pod&&state.pod.sets&&state.pod.sets[n]||[]}
 function podCount(n){return podGroups(n).reduce(function(a,g){return a+g.items.length},0)}
@@ -647,9 +658,10 @@ function rSet(r){
   var ls=losStats(r.n);
   h+='<div class="prog" style="height:8px;margin:10px 0 6px"><i style="width:'+st.pct+'%"></i></div><div class="mut" style="font-size:13px;margin-bottom:14px">'+st.pct+'% of chapters and questions attempted ('+(st.done+st.seen)+' of '+st.tot+')</div>';
   if(ls.tot)h+='<div class="kpis" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:6px">'+['First','Second','Third'].map(function(nm,i){return '<div class="kpi"><span>'+nm+' pass</span><b style="font-size:22px">'+ls.p[i]+'/'+ls.tot+'</b><div class="bar" style="margin-top:8px"><i style="width:'+Math.round(ls.p[i]/ls.tot*100)+'%"></i></div></div>'}).join('')+'</div>';
-  var tabs=[['learn','Learn',c.learn||0],['speak','Speak',c.speak||0],['retrieve','Retrieve',c.retrieve||0],['saq','SAQ',c.saq||0],['viva','Viva',c.viva||0],['los','Learning Outcomes',c.los||0],['docs','Professional Documents',c.docs||0],['podcasts','Podcasts',podCount(r.n)],['trials','Landmark Trials',0],['refs','References',0]];
+  var tabs=[['learn','Learn',c.learn||0],['summaries','Summaries',sumCount(r.n)],['speak','Speak',c.speak||0],['retrieve','Retrieve',c.retrieve||0],['saq','SAQ',c.saq||0],['viva','Viva',c.viva||0],['los','Learning Outcomes',c.los||0],['docs','Professional Documents',c.docs||0],['podcasts','Podcasts',podCount(r.n)],['trials','Landmark Trials',0],['refs','References',0]];
   h+='<div class="tabs">'+tabs.map(function(x){return '<a href="#set-'+r.n+'-'+x[0]+'" class="'+(tab===x[0]?'on':'')+'">'+x[1]+(x[2]?'<small>'+x[2]+'</small>':'')+'</a>'}).join('')+'</div>';
   if(tab==='podcasts')return h+podHtml(r.n);
+  if(tab==='summaries')return h+sumHtml(r.n);
   var list=sortItems(its.filter(function(i){return i.type===tab}));
   if(!cnt(c)){
     return h+'<div class="empty"><b>No study content for this set yet.</b><br>Ask Claude to write Set '+r.n+' and it will appear here.</div>';
@@ -907,6 +919,9 @@ var A={
     var r=route(),D=state.mcq[r.paper],q=D.questions.filter(function(x){return x.n===n})[0],ok=q.opts.filter(function(o){return o.l===pick})[0].ok;
     state.P.done[mcqKey(r.paper,n)]={pick:pick,ok:ok,at:today()};saveP();mcqRefresh(el,n)},
   mcqRetry:function(el){var n=+el.dataset.q,r=route();delete state.P.done[mcqKey(r.paper,n)];saveP();mcqRefresh(el,n)},
+  sumOffline:function(el){var n=+el.dataset.n,L=sumItems(n),B=state.sum.base,st=el.parentNode.querySelector('[data-sumst]'),k=0;
+    st.textContent='Saving 0 of '+L.length+'\u2026';
+    L.reduce(function(p,x){return p.then(function(){return fetch(B+x.img,{mode:'cors'}).then(function(r){return r.blob()}).then(function(){k++;st.textContent='Saving '+k+' of '+L.length+'\u2026'}).catch(function(){})})},Promise.resolve()).then(function(){st.textContent=k===L.length?'Saved '+k+' of '+L.length+' for offline.':'Saved '+k+' of '+L.length+'. Some failed; check your connection.'})},
   podTick:function(el){var k=el.dataset.key,P=state.P;if(el.checked)P.done[k]=today();else delete P.done[k];saveP();var w=el.closest('.card'),root=w&&w.parentNode,all=root.querySelectorAll('input[data-act=podTick]'),n=0;all.forEach(function(x){if(x.checked)n++});var c=root.querySelector('[data-podn]');if(c)c.textContent=n+' of '+all.length+' listened to';var bar=root.querySelector('.prog i');if(bar)bar.style.width=Math.round(n/Math.max(1,all.length)*100)+'%'},
   selfTick:function(el){var w=el.closest('.selfchk'),all=w.querySelectorAll('input[type=checkbox]'),n=0;all.forEach(function(x){if(x.checked)n++});w.querySelector('.selfn b').textContent=n+' of '+all.length},
   tick:function(el){var p=state.practice;p.checks[+el.dataset.i]=el.checked;var n=(p.it.rubric||[]).length;document.getElementById('score').textContent=p.checks.filter(Boolean).length+' of '+n},
